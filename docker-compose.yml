@@ -1,0 +1,14 @@
+version: '3.4'
+services:
+  unit_tests:
+    image: unit_tests
+    build:
+      context: Server/
+      target: unit_tests
+    ports: 
+      - 8080:80
+  app:
+    image: app
+    build:
+      context: Server/
+      target: app
