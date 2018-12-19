@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PutBetCardActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/ORANGE_BET_CARD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#f9812a"
+            android:text="ORANGE" />
+
+        <Button
+            android:id="@+id/BLUE_BET_CARD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#0080fb"
+            android:text="BLUE" />
+
+        <Button
+            android:id="@+id/YELLOW_BET_CARD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#f8e473"
+            android:text="YELLOW" />
+
+        <Button
+            android:id="@+id/GREEN_BET_CARD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00a86b"
+            android:text="GREEN" />
+
+        <Button
+            android:id="@+id/WHITE_BET_CARD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#faf5ef"
+            android:text="WHITE" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

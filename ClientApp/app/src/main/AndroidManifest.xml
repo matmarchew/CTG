@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ThrowCubeActivity" />
+        <activity android:name=".PutBetCardActivity" />
+        <activity android:name=".PutDesertTileActivity" />
+        <activity android:name=".GetBetTileActivity" />
+        <activity android:name=".ChooseStackActivity" />
+        <activity android:name=".ChooseFieldActivity"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
