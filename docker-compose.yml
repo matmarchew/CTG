@@ -12,3 +12,5 @@ services:
     build:
       context: Server/
       target: app
+    ports: 
+      - 4444:4444
