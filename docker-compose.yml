@@ -6,7 +6,7 @@ services:
       context: Server/
       target: unit_tests
     ports: 
-      - 8080:80
+      - 80:80
   app:
     image: app
     build:
@@ -14,3 +14,10 @@ services:
       target: app
     ports: 
       - 4444:4444
+  web_page:
+    image: web_page
+    build:
+      context: WebPage/
+      target: web_page
+    ports: 
+      - 8080:8080
