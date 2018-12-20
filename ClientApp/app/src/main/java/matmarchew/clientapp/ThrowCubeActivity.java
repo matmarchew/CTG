@@ -13,7 +13,6 @@ public class ThrowCubeActivity extends AppCompatActivity {
         Client client = ClientHandler.getClient();
 
         CustomJSONObject json = new CustomJSONObject();
-        json.put(Messages.STATE, Messages.MOVE);
         json.put(Messages.ACTION_TYPE, Messages.THROW_CUBE);
         client.sendMessage(json);
 

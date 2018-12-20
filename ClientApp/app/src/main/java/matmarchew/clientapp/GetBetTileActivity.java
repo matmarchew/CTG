@@ -16,14 +16,8 @@ public class GetBetTileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_bet_tile);
 
-        CustomJSONObject json = ClientHandler.getClient().receiveMessage();
-        /*String message = "{\"" + Messages.BET_TILES + "\":[" +
-                "{\"" + Messages.COLOR + "\":\"ORANGE\",\"" + Messages.VALUE + "\":\"5\"}," +
-                "{\"" + Messages.COLOR + "\":\"BLUE\",\"" + Messages.VALUE + "\":\"3\"}," +
-                "{\"" + Messages.COLOR + "\":\"YELLOW\",\"" + Messages.VALUE + "\":\"0\"}," +
-                "{\"" + Messages.COLOR + "\":\"GREEN\",\"" + Messages.VALUE + "\":\"5\"}," +
-                "{\"" + Messages.COLOR + "\":\"WHITE\",\"" + Messages.VALUE + "\":\"2\"}" +
-                "]}";*/
+        CustomJSONObject json = new CustomJSONObject();
+        json.getJSONObjectFromString(getIntent().getStringExtra("JSON"));
 
         JSONArray jsonArray = json.getJSONArray(Messages.BET_TILES);
 
@@ -59,7 +53,6 @@ public class GetBetTileActivity extends AppCompatActivity {
     private void onClick(Button button, String color) {
         button.setOnClickListener(v -> {
             CustomJSONObject json = new CustomJSONObject();
-            json.put(Messages.STATE, Messages.MOVE);
             json.put(Messages.ACTION_TYPE, Messages.GET_BET_TILE);
             json.put(Messages.COLOR, color);
             ClientHandler.getClient().sendMessage(json);

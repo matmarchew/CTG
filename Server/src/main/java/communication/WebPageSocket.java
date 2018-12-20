@@ -8,7 +8,7 @@ import java.net.URL;
 public class WebPageSocket {
     public static void sendMessageToWebPage(String message) {
         try {
-            URL url = new URL("http://localhost:8080/status/");
+            URL url = new URL("http://172.30.0.4:8080/status/");
             HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
             httpCon.setDoOutput(true);
             httpCon.setRequestMethod("PUT");

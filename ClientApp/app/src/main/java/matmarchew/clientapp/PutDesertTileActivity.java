@@ -12,9 +12,9 @@ public class PutDesertTileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_put_desert_tile);
 
-        CustomJSONObject json = ClientHandler.getClient().receiveMessage();
+        CustomJSONObject json = new CustomJSONObject();
+        json.getJSONObjectFromString(getIntent().getStringExtra("JSON"));
 
-        //String message = "{\"" + Messages.DESERT_TILE + "\":\"true\", \"" + Messages.FIELD_NUMBER + "\":[\"0\",\"10\",\"11\",\"4\",\"7\"]}";
         String isDesertTileExist = json.getString(Messages.DESERT_TILE);
 
         if(isDesertTileExist.equals("false"))

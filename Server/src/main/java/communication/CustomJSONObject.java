@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class CustomJSONObject extends JSONObject {
-
     @Override
     public JSONObject put(String s, Collection collection) {
         try {

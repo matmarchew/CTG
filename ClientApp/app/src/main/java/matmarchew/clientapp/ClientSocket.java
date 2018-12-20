@@ -41,10 +41,12 @@ public class ClientSocket extends AsyncTask<String, String, String>{
 
     public void sendMessage(String message) {
         try {
+            while(server == null);
             OutputStreamWriter playerStreamOutput = new OutputStreamWriter(server.getOutputStream());
             BufferedWriter bW = new BufferedWriter(playerStreamOutput);
             PrintWriter pW = new PrintWriter(bW, true);
-            pW.println(message);
+            Thread send = new Thread(() -> pW.println(message));
+            send.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,6 +55,6 @@ public class ClientSocket extends AsyncTask<String, String, String>{
     @Override
     protected String doInBackground(String... strings) {
         server = connectToServer(serverUrl, serverPort);
-        return "";
+        while(true) ClientHandler.getClient().receiveMessage();
     }
 }

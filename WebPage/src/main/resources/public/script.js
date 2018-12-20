@@ -18,7 +18,7 @@ function convertToValue(value) {
 
 function updatePawnsOnField(img, pawns, fieldNumber) {
     for(i=pawns.length-1; i >= 0; i--) {
-        var color = pawns[i].COLOR;
+        var color = pawns[i];
         var pawn = img.getElementById("FIELD" + fieldNumber + "-" + (pawns.length - 1 - i));
         pawn.style="fill-opacity:1;fill:" + getColorToHash(color) + ";";
     }
@@ -47,6 +47,19 @@ function updateDesertTileOnField(img, action, fieldNumber, page) {
     }
 }
 
+function refreshBetTile(img) {
+    var betTileOrange = img.getElementById("BET_TILE_ORANGE");
+    betTileOrange.textContent="5";
+    var betTileBlue = img.getElementById("BET_TILE_BLUE");
+    betTileBlue.textContent="5";
+    var betTileYellow = img.getElementById("BET_TILE_YELLOW");
+    betTileYellow.textContent="5";
+    var betTileGreen = img.getElementById("BET_TILE_GREEN");
+    betTileGreen.textContent="5";
+    var betTileWhite = img.getElementById("BET_TILE_WHITE");
+    betTileWhite.textContent="5";
+}
+
 function doAction(img, json) {
     if (json.OBJECT_TYPE === "PAWNS") {
         updatePawnsOnField(img, json.PAWNS, json.FIELD_NUMBER);
@@ -54,6 +67,8 @@ function doAction(img, json) {
         setBetTileTextAction(img, json.COLOR, json.VALUE);
     } else if (json.OBJECT_TYPE === "DESERT_TILE") {
         updateDesertTileOnField(img, json.DESERT_TILE, json.FIELD_NUMBER, json.PAGE);
+    } else if (json.OBJECT_TYPE === "REFRESH") {
+        refreshBetTile(img);
     }
 }
 
@@ -64,7 +79,7 @@ function connect() {
           doc = img.contentDocument;
      }, false);
 
-    var socket = new SockJS('/gs-guide-websocket');
+    var socket = new SockJS('/CTG');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         stompClient.subscribe('/topic/greetings', function (message) {

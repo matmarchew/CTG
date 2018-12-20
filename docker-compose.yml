@@ -7,6 +7,9 @@ services:
       target: unit_tests
     ports: 
       - 80:80
+    networks: 
+      net:
+        ipv4_address: 172.30.0.2
   app:
     image: app
     build:
@@ -14,10 +17,22 @@ services:
       target: app
     ports: 
       - 4444:4444
+    networks: 
+      net:
+        ipv4_address: 172.30.0.3
   web_page:
     image: web_page
     build:
       context: WebPage/
-      target: web_page
     ports: 
       - 8080:8080
+    networks: 
+      net:
+        ipv4_address: 172.30.0.4
+    
+networks:
+  net:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.30.0.0/16

@@ -1,5 +1,6 @@
 package rules.players;
 
+import communication.CustomJSONObject;
 import communication.observer.BettingTileObserver;
 import communication.observer.DesertTileObserver;
 import org.junit.Assert;
@@ -127,9 +128,9 @@ public class PlayerTest {
         Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), bettingCards, mock(DesertTile.class));
 
         //When
-        List<BettingCard> result = player.getUsedBetCards();
+        List<CustomJSONObject> result = player.getUsedBetCards();
 
         //Then
-        Assert.assertTrue(result.get(0).equals(color2));
+        Assert.assertTrue(result.size() == 1);
     }
 }

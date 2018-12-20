@@ -1,7 +1,7 @@
 package rules.players;
 
-import rules.Cubes;
 import communication.CustomJSONObject;
+import rules.Cubes;
 import rules.Messages;
 import rules.action.PlayerAction;
 import rules.action.PlayerActionFactory;
@@ -11,7 +11,6 @@ import rules.board.Board;
 import rules.board.Pawn;
 import rules.board.tiles.bet.BettingTile;
 import rules.board.tiles.desert.DesertTile;
-import communication.information.InformationActionFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -75,14 +74,10 @@ public class Player implements Comparable<Player> {
     }
 
     public PlayerAction getPlayerAction(Board board, Cubes cubes) {
-        while(true) {
-            String message = socket.receiveMessageFromAndroid();
-            CustomJSONObject json = new CustomJSONObject();
-            json.getJSONObjectFromString(message);
-            if(json.getString(Messages.STATE).equals(Messages.START))
-                return PlayerActionFactory.getPlayerActionFromJson(json, this, board, cubes);
-            InformationActionFactory.getInformationAction(json, this, board).sendInformation();
-        }
+        String message = socket.receiveMessageFromAndroid();
+        CustomJSONObject json = new CustomJSONObject();
+        json.getJSONObjectFromString(message);
+        return PlayerActionFactory.getPlayerActionFromJson(json, this, board, cubes);
     }
 
     @Override
@@ -97,8 +92,14 @@ public class Player implements Comparable<Player> {
         else return false;
     }
 
-    public List<BettingCard> getUsedBetCards() {
-        return bettingCards.getBettingCards();
+    public List<CustomJSONObject> getUsedBetCards() {
+        List<CustomJSONObject> jsonList = new LinkedList<>();
+        bettingCards.getBettingCards().forEach(card -> {
+            CustomJSONObject json = new CustomJSONObject();
+            json.put(Messages.COLOR, card.toString());
+            jsonList.add(json);
+        });
+        return jsonList;
     }
 
     public Boolean isHaveDesertTile() {

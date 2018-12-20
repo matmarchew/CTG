@@ -6,7 +6,7 @@ public class Client {
 
     public Client(ClientSocket clientSocket) {
         this.clientSocket = clientSocket;
-        isReadyToSend = false;
+        isReadyToSend = true;
     }
 
     public CustomJSONObject receiveMessage() {
@@ -18,19 +18,14 @@ public class Client {
     }
 
     public void sendMessage(CustomJSONObject json) {
-        changeState(json);
-        if(isReadyToSend) clientSocket.sendMessage(json.toString());
+        if(isReadyToSend) {
+            clientSocket.sendMessage(json.toString());
+            changeState(json);
+        }
     }
 
     private void changeState(CustomJSONObject json) {
-        String state = json.getString(Messages.STATE);
-        if(state.equals(Messages.START)) {
-            isReadyToSend = true;
-        }
-
-        if(state.equals(Messages.MOVE)) {
-            isReadyToSend = false;
-        }
+        isReadyToSend = json.getString(Messages.STATE).equals(Messages.START);
     }
 
     public boolean isReady() {

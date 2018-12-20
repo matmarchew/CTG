@@ -78,20 +78,20 @@ public class GameTest {
         PlayerSocket playerSocket = mock(PlayerSocket.class);
         doNothing().when(playerSocket).sendMessageToAndroid(Messages.START);
         when(playerSocket.receiveMessageFromAndroid()).thenReturn(
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_DESERT_TILE + "\",\"" + Messages.PAGE + "\":" + "\"" + Messages.MIRAGE_PAGE + "\",\"" + Messages.FIELD_NUMBER + "\":\"" + "3\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_DESERT_TILE + "\",\"" + Messages.PAGE + "\":" + "\"" + Messages.OASIS_PAGE + "\",\"" + Messages.FIELD_NUMBER + "\":\"" + "3\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.GET_BET_TILE + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.GET_BET_TILE + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[4] + "\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\",\"" + Messages.STACK + "\":\"" + Messages.WINNER_STACK +"\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\",\"" + Messages.STACK + "\":\"" + Messages.WINNER_STACK +"\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[1] + "\",\"" + Messages.STACK + "\":\"" + Messages.LOSER_STACK +"\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[1] + "\",\"" + Messages.STACK + "\":\"" + Messages.LOSER_STACK +"\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\",\"" + Messages.STACK + "\":\"" + Messages.LOSER_STACK +"\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.GET_BET_TILE + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[1] + "\"}",
-                "{\"" + Messages.STATE + "\":\"" + Messages.START + "\"," + "\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}"
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_DESERT_TILE + "\",\"" + Messages.PAGE + "\":" + "\"" + Messages.MIRAGE_PAGE + "\",\"" + Messages.FIELD_NUMBER + "\":\"" + "3\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_DESERT_TILE + "\",\"" + Messages.PAGE + "\":" + "\"" + Messages.OASIS_PAGE + "\",\"" + Messages.FIELD_NUMBER + "\":\"" + "3\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.GET_BET_TILE + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.GET_BET_TILE + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[4] + "\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\",\"" + Messages.STACK + "\":\"" + Messages.WINNER_STACK +"\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\",\"" + Messages.STACK + "\":\"" + Messages.WINNER_STACK +"\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[1] + "\",\"" + Messages.STACK + "\":\"" + Messages.LOSER_STACK +"\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[1] + "\",\"" + Messages.STACK + "\":\"" + Messages.LOSER_STACK +"\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\",\"" + Messages.STACK + "\":\"" + Messages.LOSER_STACK +"\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.GET_BET_TILE + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[1] + "\"}",
+                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}"
                 );
         for (int i = 0; i < 4; i++) {
             DesertTileObserver desertTileObserver = mock(DesertTileObserver.class);

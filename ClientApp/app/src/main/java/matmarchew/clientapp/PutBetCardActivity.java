@@ -11,15 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PutBetCardActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_put_bet_card);
 
-        CustomJSONObject json = ClientHandler.getClient().receiveMessage();
+        CustomJSONObject json = new CustomJSONObject();
+        json.getJSONObjectFromString(getIntent().getStringExtra("JSON"));
 
-        //String message = "{\"" + Messages.BET_CARD + "\":[{\"" + Messages.COLOR + "\":\"ORANGE\"}, {\"" + Messages.COLOR + "\":\"GREEN\"}]}";
         JSONArray jsonArray = json.getJSONArray(Messages.BET_CARD);
 
         Map<String, Button> buttons = new HashMap<>();

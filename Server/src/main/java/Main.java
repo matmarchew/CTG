@@ -30,7 +30,6 @@ public class Main {
             CustomJSONObject json = new CustomJSONObject();
             json.getJSONObjectFromString(ps.receiveMessageFromAndroid());
             String playerLogin = json.getString(Messages.LOGIN);
-
             List<BettingCard> bettingCards = new LinkedList<>();
             bettingCards.add(new BettingCard("ORANGE", playerLogin));
             bettingCards.add(new BettingCard("BLUE", playerLogin));

@@ -1,5 +1,8 @@
 package rules.board.tiles.bet;
 
+import communication.CustomJSONObject;
+import rules.Messages;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,9 +25,15 @@ public class BettingTiles {
         return stacksOfBettingTile.stream().filter(stackOfBettingTile -> stackOfBettingTile.equals(color)).findFirst().get();
     }
 
-    public List<BettingTile> getTopBettingTileFromEveryStack() {
-        List<BettingTile> bettingTiles = new LinkedList<>();
-        stacksOfBettingTile.forEach(stackOfBettingTile -> bettingTiles.add(stackOfBettingTile.getTopBettingTile()));
+    public List<CustomJSONObject> getTopBettingTileFromEveryStack() {
+        List<CustomJSONObject> bettingTiles = new LinkedList<>();
+        stacksOfBettingTile.forEach(stackOfBettingTile -> {
+            BettingTile bettingTile = stackOfBettingTile.getTopBettingTile();
+            CustomJSONObject json = new  CustomJSONObject();
+            json.put(Messages.COLOR, bettingTile.getColor());
+            json.put(Messages.VALUE, bettingTile.getValue() + "");
+            bettingTiles.add(json);
+        });
         return bettingTiles;
     }
 }

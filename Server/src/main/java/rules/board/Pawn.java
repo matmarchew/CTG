@@ -8,6 +8,11 @@ public class Pawn {
     }
 
     @Override
+    public String toString() {
+        return color;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o != null) return o.equals(color);

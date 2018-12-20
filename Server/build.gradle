@@ -12,4 +12,9 @@ allprojects {
         testCompile group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
         compile group: 'org.json', name: 'json', version: '20090211'
     }
+
+    task run(type: JavaExec) {
+        classpath = sourceSets.main.runtimeClasspath
+        main = 'Main'
+    }
 }

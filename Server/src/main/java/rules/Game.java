@@ -1,6 +1,7 @@
 package rules;
 
 import communication.CustomJSONObject;
+import communication.WebPageSocket;
 import rules.action.PlayerAction;
 import rules.board.Board;
 import rules.board.Pawn;
@@ -26,6 +27,9 @@ public class Game {
         do {
             prepareBoardBeforeRound();
             playRound();
+            CustomJSONObject json = new CustomJSONObject();
+            json.put(Messages.OBJECT_TYPE, Messages.REFRESH);
+            WebPageSocket.sendMessageToWebPage(json.toString());
             calculatePointsAfterRound();
         } while (!isFinishedGame());
         calculatePointsAfterGame();
@@ -44,13 +48,23 @@ public class Game {
     private void playRound() {
         while (cubes.isCubesExist() && !isFinishedGame()) {
             Player actualPlayer = players.getNextPlayer();
-            CustomJSONObject json = new CustomJSONObject();
-            json.put(Messages.STATE, Messages.START);
-            actualPlayer.sendMessageToMobile(json.toString());
+
+            sendActualStateToPlayer(actualPlayer);
+
             PlayerAction action = actualPlayer.getPlayerAction(board, cubes);
             action.performAction();
             backDesertTileToPlayer(board.getReturnedDesertTile());
         }
+    }
+
+    private void sendActualStateToPlayer(Player actualPlayer) {
+        CustomJSONObject json = new CustomJSONObject();
+        json.put(Messages.BET_CARD, actualPlayer.getUsedBetCards());
+        json.put(Messages.BET_TILES, board.getStacksOfBetTile().getTopBettingTileFromEveryStack());
+        json.put(Messages.FIELD_NUMBER, board.getFields().getFieldsWhereNoPutDesertTile());
+        json.put(Messages.DESERT_TILE, actualPlayer.isHaveDesertTile().toString());
+        json.put(Messages.STATE, Messages.START);
+        actualPlayer.sendMessageToMobile(json.toString());
     }
 
     private void calculatePointsAfterRound() {

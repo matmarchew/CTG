@@ -1,5 +1,6 @@
 package rules.board.tiles.bet;
 
+import communication.CustomJSONObject;
 import communication.observer.BettingTileObserver;
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,7 +42,7 @@ public class BettingTilesTest {
         bettingTiles.prepareStacksOfBettingTile();
 
         //When
-        List<BettingTile> result = bettingTiles.getTopBettingTileFromEveryStack();
+        List<CustomJSONObject> result = bettingTiles.getTopBettingTileFromEveryStack();
 
         //Then
         Assert.assertTrue(result.size() == 2);

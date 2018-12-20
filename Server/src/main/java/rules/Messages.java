@@ -32,4 +32,6 @@ public final class Messages {
     public static final String PAWNS = "PAWNS";
     public static final String BET_TILES = "BET_TILES";
     public static final String BET_CARD = "BET_CARD";
+
+    public static final String REFRESH = "REFRESH";
 }

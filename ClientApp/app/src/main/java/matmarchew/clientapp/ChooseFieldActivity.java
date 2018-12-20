@@ -62,7 +62,6 @@ public class ChooseFieldActivity extends AppCompatActivity {
     private void onClick(Button button, String number, String page) {
         button.setOnClickListener(v -> {
             CustomJSONObject json = new CustomJSONObject();
-            json.put(Messages.STATE, Messages.MOVE);
             json.put(Messages.ACTION_TYPE, Messages.PUT_DESERT_TILE);
             json.put(Messages.FIELD_NUMBER, number);
             json.put(Messages.PAGE, page);
