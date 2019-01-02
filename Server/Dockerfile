@@ -1,13 +1,10 @@
 FROM java:alpine AS base
 WORKDIR /app
 
-FROM base AS build
+FROM base AS app
 COPY . .
 RUN ./gradlew test
+ENTRYPOINT ./gradlew run
 
 FROM httpd:2.4 AS unit_tests
-COPY --from=build /app/build/reports/tests/test/ /usr/local/apache2/htdocs/
-
-FROM base AS app
-COPY --from=build /app/build/classes/java/main/ .
-ENTRYPOINT java Main
+COPY --from=app /app/build/reports/tests/test/ /usr/local/apache2/htdocs/
