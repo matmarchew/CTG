@@ -4,7 +4,6 @@ import communication.CustomJSONObject;
 import rules.Messages;
 
 public class BettingTileObserver extends Observer {
-
     public void createInfoForWeb(int value, String color) {
         CustomJSONObject json = new CustomJSONObject();
         json.put(Messages.COLOR, color);
