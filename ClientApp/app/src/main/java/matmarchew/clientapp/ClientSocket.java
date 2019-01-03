@@ -1,7 +1,5 @@
 package matmarchew.clientapp;
 
-import android.os.AsyncTask;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -10,14 +8,11 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ClientSocket extends AsyncTask<String, String, String>{
-    private final String serverUrl;
-    private final int serverPort;
+public class ClientSocket {
     private Socket server;
 
     public ClientSocket(String serverUrl, int serverPort) {
-        this.serverUrl = serverUrl;
-        this.serverPort = serverPort;
+        new Thread(() -> server = connectToServer(serverUrl, serverPort)).start();
     }
 
     private Socket connectToServer(String serverUrl, int serverPort) {
@@ -50,11 +45,5 @@ public class ClientSocket extends AsyncTask<String, String, String>{
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    protected String doInBackground(String... strings) {
-        server = connectToServer(serverUrl, serverPort);
-        while(true) ClientHandler.getClient().receiveMessage();
     }
 }

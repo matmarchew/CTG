@@ -17,7 +17,7 @@ public class PutDesertTileActivity extends AppCompatActivity {
 
         String isDesertTileExist = json.getString(Messages.DESERT_TILE);
 
-        if(isDesertTileExist.equals("false"))
+        if(!isDesertTileExist.equals("true"))
             finish();
 
         Button oasisPage = findViewById(R.id.OASIS_PAGE);

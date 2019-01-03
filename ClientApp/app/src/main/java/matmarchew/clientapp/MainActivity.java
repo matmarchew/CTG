@@ -16,12 +16,9 @@ public class MainActivity extends AppCompatActivity {
         ClientSocket clientSocket = new ClientSocket("192.168.99.100", 4444);
         Client client = new Client(clientSocket);
         ClientHandler.setClient(client);
-        clientSocket.execute("");
         CustomJSONObject json = new CustomJSONObject();
         json.put(Messages.LOGIN, "1");
         client.sendMessage(json);
-
-        onResume();
 
         onClick(findViewById(R.id.THROW_CUBE), new Intent(this, ThrowCubeActivity.class));
         onClick(findViewById(R.id.PUT_BET_CARD), new Intent(this, PutBetCardActivity.class));
