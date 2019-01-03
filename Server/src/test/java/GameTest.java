@@ -1,3 +1,4 @@
+import communication.observer.CubesObserver;
 import org.junit.Assert;
 import org.junit.Test;
 import rules.Cube;
@@ -27,7 +28,7 @@ public class GameTest {
         //Given
         Board board = new Board(generateFields(), generateStacksOfBetTile());
         Players players = new Players(generatePlayers());
-        Cubes cubes = spy(new Cubes(generateCubes()));
+        Cubes cubes = spy(new Cubes(generateCubes(), mock(CubesObserver.class)));
         doNothing().when(cubes).shuffle();
         Game game = new Game(board, players, cubes);
 

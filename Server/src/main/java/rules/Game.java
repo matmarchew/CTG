@@ -1,7 +1,6 @@
 package rules;
 
 import communication.CustomJSONObject;
-import communication.WebPageSocket;
 import rules.action.PlayerAction;
 import rules.board.Board;
 import rules.board.Pawn;
@@ -27,9 +26,7 @@ public class Game {
         do {
             prepareBoardBeforeRound();
             playRound();
-            CustomJSONObject json = new CustomJSONObject();
-            json.put(Messages.OBJECT_TYPE, Messages.REFRESH);
-            WebPageSocket.sendMessageToWebPage(json.toString());
+            cubes.notifyCubesObserver();
             calculatePointsAfterRound();
         } while (!isFinishedGame());
         calculatePointsAfterGame();

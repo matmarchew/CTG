@@ -1,5 +1,6 @@
 package rules.action;
 
+import communication.observer.CubesObserver;
 import communication.observer.FieldsObserver;
 import org.junit.Assert;
 import org.junit.Test;
@@ -37,7 +38,7 @@ public class ThrowCubeActionTest {
         Board board = new Board(fields, mock(BettingTiles.class));
         String playerLogin = UUID.randomUUID().toString();
         Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class));
-        Cubes cubes = new Cubes(Arrays.asList(cube));
+        Cubes cubes = new Cubes(Arrays.asList(cube), mock(CubesObserver.class));
         cubes.prepareCubes();
         ThrowCubeAction throwCubeAction = new ThrowCubeAction(board, cubes, player);
         board.movePawns(1, new Cube(color));

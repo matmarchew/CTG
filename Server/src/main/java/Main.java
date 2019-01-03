@@ -1,3 +1,4 @@
+import communication.observer.CubesObserver;
 import rules.*;
 import rules.board.*;
 import rules.board.tiles.bet.BettingTile;
@@ -50,7 +51,7 @@ public class Main {
         cubeList.add(new Cube("GREEN"));
         cubeList.add(new Cube("WHITE"));
 
-        return new Cubes(cubeList);
+        return new Cubes(cubeList, new CubesObserver());
     }
 
     private static Board getBoard() {
