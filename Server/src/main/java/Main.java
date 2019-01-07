@@ -1,4 +1,4 @@
-import communication.observer.CubesObserver;
+import communication.observer.*;
 import rules.*;
 import rules.board.*;
 import rules.board.tiles.bet.BettingTile;
@@ -10,9 +10,6 @@ import rules.players.PlayerSocket;
 import rules.players.Players;
 import communication.CustomJSONObject;
 import communication.Server;
-import communication.observer.BettingTileObserver;
-import communication.observer.DesertTileObserver;
-import communication.observer.FieldsObserver;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +35,7 @@ public class Main {
             bettingCards.add(new BettingCard("GREEN", playerLogin));
             bettingCards.add(new BettingCard("WHITE", playerLogin));
 
-            players.add(new Player(ps, playerLogin , new BettingCards(bettingCards), new DesertTile(playerLogin, new DesertTileObserver())));
+            players.add(new Player(ps, playerLogin , new BettingCards(bettingCards), new DesertTile(playerLogin, new DesertTileObserver()), new PlayerObserver()));
         }
         return new Players(players);
     }

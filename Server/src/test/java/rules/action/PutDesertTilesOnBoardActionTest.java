@@ -2,6 +2,7 @@ package rules.action;
 
 import communication.observer.DesertTileObserver;
 import communication.observer.FieldsObserver;
+import communication.observer.PlayerObserver;
 import org.junit.Assert;
 import org.junit.Test;
 import rules.Messages;
@@ -26,7 +27,7 @@ public class PutDesertTilesOnBoardActionTest {
         List<Field> fields = new LinkedList<>();
         fields.add(field);
         String playerLogin = UUID.randomUUID().toString();
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)), mock(PlayerObserver.class));
         PutDesertTilesOnBoardAction putDesertTilesOnBoardAction = new PutDesertTilesOnBoardAction(new Fields(fields, mock(FieldsObserver.class)), player, Messages.OASIS_PAGE, "0");
 
         //When
@@ -43,7 +44,7 @@ public class PutDesertTilesOnBoardActionTest {
         List<Field> fields = new LinkedList<>();
         fields.add(field);
         String playerLogin = UUID.randomUUID().toString();
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)), mock(PlayerObserver.class));
         PutDesertTilesOnBoardAction putDesertTilesOnBoardAction = new PutDesertTilesOnBoardAction(new Fields(fields, mock(FieldsObserver.class)), player, Messages.MIRAGE_PAGE, "0");
 
         //When

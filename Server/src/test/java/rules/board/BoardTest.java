@@ -3,6 +3,7 @@ package rules.board;
 import communication.observer.BettingTileObserver;
 import communication.observer.DesertTileObserver;
 import communication.observer.FieldsObserver;
+import communication.observer.PlayerObserver;
 import org.junit.Assert;
 import org.junit.Test;
 import rules.Cube;
@@ -77,7 +78,7 @@ public class BoardTest {
         String color = UUID.randomUUID().toString();
         String playerLogin = UUID.randomUUID().toString();
         BettingCard bettingCard = new BettingCard(color, playerLogin);
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), mock(DesertTile.class));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
 
         //When
         board.addBettingCardToStack(bettingCard, Messages.WINNER_STACK);
@@ -94,7 +95,7 @@ public class BoardTest {
         String color = UUID.randomUUID().toString();
         String playerLogin = UUID.randomUUID().toString();
         BettingCard bettingCard = new BettingCard(color, playerLogin);
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), mock(DesertTile.class));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
 
         //When
         board.addBettingCardToStack(bettingCard, Messages.LOSER_STACK);

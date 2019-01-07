@@ -1,4 +1,4 @@
-import communication.observer.CubesObserver;
+import communication.observer.*;
 import org.junit.Assert;
 import org.junit.Test;
 import rules.Cube;
@@ -13,9 +13,6 @@ import rules.board.tiles.desert.DesertTile;
 import rules.players.Player;
 import rules.players.PlayerSocket;
 import rules.players.Players;
-import communication.observer.BettingTileObserver;
-import communication.observer.DesertTileObserver;
-import communication.observer.FieldsObserver;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -97,7 +94,7 @@ public class GameTest {
         for (int i = 0; i < 4; i++) {
             DesertTileObserver desertTileObserver = mock(DesertTileObserver.class);
             doNothing().when(desertTileObserver).createInfoForWeb(anyInt(), anyString(), anyString());
-            players.add(new Player(playerSocket, Integer.toString(i + 1), generateBetCards(Integer.toString(i + 1)), new DesertTile(Integer.toString(i + 1), desertTileObserver)));
+            players.add(new Player(playerSocket, Integer.toString(i + 1), generateBetCards(Integer.toString(i + 1)), new DesertTile(Integer.toString(i + 1), desertTileObserver), mock(PlayerObserver.class)));
         }
         return players;
     }

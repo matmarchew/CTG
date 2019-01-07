@@ -16,7 +16,7 @@
    viewBox="0 0 361.42083 203.20001"
    version="1.1"
    id="svg8"
-   sodipodi:docname="fields.svg"
+   sodipodi:docname="board.svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)">
   <defs
      id="defs2">
@@ -1354,5 +1354,18 @@
        rx="5.638063"
        ry="5.2791901"
        inkscape:label="" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.29154396px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#808588;fill-opacity:1;stroke:none;stroke-width:1.2057215;"
+       x="118.63509"
+       y="122.1067"
+       id="player"
+       transform="scale(1.0310102,0.9699225)"
+       inkscape:label=""><tspan
+         sodipodi:role="line"
+         id="tspan1185"
+         x="121.70592"
+         y="122.1067"
+         style="stroke-width:1.2057215;fill:#808588;fill-opacity:1;">PLAYER: </tspan></text>
   </g>
 </svg>

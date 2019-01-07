@@ -60,6 +60,11 @@ function refreshBetTile(img) {
     betTileWhite.textContent="5";
 }
 
+function updatePlayer(img, login) {
+    var player = img.getElementById("player");
+    player.textContent="PLAYER: " + login
+}
+
 function doAction(img, json) {
     if (json.OBJECT_TYPE === "PAWNS") {
         updatePawnsOnField(img, json.PAWNS, json.FIELD_NUMBER);
@@ -69,6 +74,8 @@ function doAction(img, json) {
         updateDesertTileOnField(img, json.DESERT_TILE, json.FIELD_NUMBER, json.PAGE);
     } else if (json.OBJECT_TYPE === "REFRESH") {
         refreshBetTile(img);
+    } else if (json.OBJECT_TYPE === "PLAYER") {
+        updatePlayer(img, json.LOGIN);
     }
 }
 

@@ -1,6 +1,7 @@
 package rules.players;
 
 import communication.CustomJSONObject;
+import communication.observer.PlayerObserver;
 import rules.Cubes;
 import rules.Messages;
 import rules.action.PlayerAction;
@@ -22,10 +23,12 @@ public class Player implements Comparable<Player> {
     private final List<BettingTile> bettingTiles;
     private DesertTile desertTile;
     private int points;
+    private final PlayerObserver playerObserver;
 
-    public Player(PlayerSocket socket, String login, BettingCards bettingCards, DesertTile desertTile) {
+    public Player(PlayerSocket socket, String login, BettingCards bettingCards, DesertTile desertTile, PlayerObserver playerObserver) {
         this.socket = socket;
         this.login = login;
+        this.playerObserver = playerObserver;
         this.points = 0;
         bettingTiles = new LinkedList<>();
         this.desertTile = desertTile;
@@ -78,6 +81,10 @@ public class Player implements Comparable<Player> {
         CustomJSONObject json = new CustomJSONObject();
         json.getJSONObjectFromString(message);
         return PlayerActionFactory.getPlayerActionFromJson(json, this, board, cubes);
+    }
+
+    public void notifyPlayerObserver() {
+        playerObserver.notifyWebAboutActualPlayer(login);
     }
 
     @Override

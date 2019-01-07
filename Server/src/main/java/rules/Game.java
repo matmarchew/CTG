@@ -45,6 +45,7 @@ public class Game {
     private void playRound() {
         while (cubes.isCubesExist() && !isFinishedGame()) {
             Player actualPlayer = players.getNextPlayer();
+            actualPlayer.notifyPlayerObserver();
 
             sendActualStateToPlayer(actualPlayer);
 

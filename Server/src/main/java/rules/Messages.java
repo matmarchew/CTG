@@ -34,4 +34,5 @@ public final class Messages {
     public static final String BET_CARD = "BET_CARD";
 
     public static final String REFRESH = "REFRESH";
+    public static final String PLAYER = "PLAYER";
 }
