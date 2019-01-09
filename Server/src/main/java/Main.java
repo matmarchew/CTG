@@ -43,11 +43,11 @@ public class Main {
 
     private static Cubes getCubes() {
         List<Cube> cubeList = new LinkedList<>();
-        cubeList.add(new Cube("ORANGE"));
-        cubeList.add(new Cube("BLUE"));
-        cubeList.add(new Cube("YELLOW"));
-        cubeList.add(new Cube("GREEN"));
-        cubeList.add(new Cube("WHITE"));
+        cubeList.add(new Cube("ORANGE", new CubeObserver()));
+        cubeList.add(new Cube("BLUE", new CubeObserver()));
+        cubeList.add(new Cube("YELLOW", new CubeObserver()));
+        cubeList.add(new Cube("GREEN", new CubeObserver()));
+        cubeList.add(new Cube("WHITE", new CubeObserver()));
 
         return new Cubes(cubeList, new CubesObserver());
     }

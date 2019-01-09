@@ -38,4 +38,5 @@ public final class Messages {
     public static final String POINTS = "POINTS";
     public static final String FINAL_RESULTS = "FINAL_RESULTS";
     public static final String PLAYERS = "PLAYERS";
+    public static final String CUBE = "CUBE";
 }

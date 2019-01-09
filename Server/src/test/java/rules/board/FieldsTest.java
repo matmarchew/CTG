@@ -1,5 +1,6 @@
 package rules.board;
 
+import communication.observer.CubeObserver;
 import communication.observer.DesertTileObserver;
 import communication.observer.FieldsObserver;
 import org.junit.Assert;
@@ -30,7 +31,7 @@ public class FieldsTest {
         Fields fields = new Fields(tmpFields, mock(FieldsObserver.class));
 
         //When
-        int result = fields.searchFieldOnThePawnIsStandingUsingCube(new Cube(color));
+        int result = fields.searchFieldOnThePawnIsStandingUsingCube(new Cube(color, mock(CubeObserver.class)));
 
         //Then
         Assert.assertTrue(result == 0);
@@ -118,7 +119,7 @@ public class FieldsTest {
     @Test
     public void shouldReturnStartingPawn() {
         //Given
-        Cube cube = new Cube(UUID.randomUUID().toString());
+        Cube cube = new Cube(UUID.randomUUID().toString(), mock(CubeObserver.class));
         Field field = new Field();
         Fields fields = new Fields(new LinkedList<>(Arrays.asList(field)), mock(FieldsObserver.class));
 
@@ -133,7 +134,7 @@ public class FieldsTest {
     public void shouldReturnPawnsFromField() {
         //Given
         String color = UUID.randomUUID().toString();
-        Cube cube = new Cube(color);
+        Cube cube = new Cube(color, mock(CubeObserver.class));
         Pawn pawn1 = new Pawn(UUID.randomUUID().toString());
         Pawn pawn2 = new Pawn(UUID.randomUUID().toString());
         Pawn pawn3 = new Pawn(color);

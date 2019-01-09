@@ -123,7 +123,7 @@ class CubeForTest extends Cube {
     private int n;
 
     public CubeForTest(String color, int... moves) {
-        super(color);
+        super(color, mock(CubeObserver.class));
         this.moves = moves;
         n = 0;
     }

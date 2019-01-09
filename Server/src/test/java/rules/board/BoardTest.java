@@ -1,9 +1,6 @@
 package rules.board;
 
-import communication.observer.BettingTileObserver;
-import communication.observer.DesertTileObserver;
-import communication.observer.FieldsObserver;
-import communication.observer.PlayerObserver;
+import communication.observer.*;
 import org.junit.Assert;
 import org.junit.Test;
 import rules.Cube;
@@ -30,7 +27,7 @@ public class BoardTest {
         String color = UUID.randomUUID().toString();
 
         //When
-        board.movePawns(1, new Cube(color));
+        board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
 
         //Then
         Assert.assertTrue(field.getNumberOfPawns() == 1);
@@ -44,10 +41,10 @@ public class BoardTest {
         Fields fields = new Fields(new LinkedList<>(Arrays.asList(field1, field2)), mock(FieldsObserver.class));
         Board board = new Board(fields, mock(BettingTiles.class));
         String color = UUID.randomUUID().toString();
-        board.movePawns(1, new Cube(color));
+        board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
 
         //When
-        board.movePawns(3, new Cube(color));
+        board.movePawns(3, new Cube(color, mock(CubeObserver.class)));
         boolean result = board.isGameFinished();
 
         //Then
@@ -62,10 +59,10 @@ public class BoardTest {
         Fields fields = new Fields(new LinkedList<>(Arrays.asList(field1, field2)), mock(FieldsObserver.class));
         Board board = new Board(fields, mock(BettingTiles.class));
         String color = UUID.randomUUID().toString();
-        board.movePawns(1, new Cube(color));
+        board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
 
         //When
-        board.movePawns(1, new Cube(color));
+        board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
 
         //Then
         Assert.assertTrue(field2.getNumberOfPawns() == 1);
@@ -132,7 +129,7 @@ public class BoardTest {
         Board board = new Board(fields, mock(BettingTiles.class));
         String playerLogin = UUID.randomUUID().toString();
         fields.putDesertTileToField(new DesertTile(playerLogin, mock(DesertTileObserver.class)), 0);
-        board.movePawns(1, new Cube(UUID.randomUUID().toString()));
+        board.movePawns(1, new Cube(UUID.randomUUID().toString(), mock(CubeObserver.class)));
 
         //When
         DesertTile result = board.getReturnedDesertTile();

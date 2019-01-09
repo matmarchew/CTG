@@ -1,5 +1,6 @@
 package rules.action;
 
+import communication.observer.CubeObserver;
 import communication.observer.CubesObserver;
 import communication.observer.FieldsObserver;
 import communication.observer.PlayerObserver;
@@ -25,7 +26,7 @@ public class ThrowCubeActionTest {
     public void shouldDrawnPawnIsMove() {
         //Given
         String color = UUID.randomUUID().toString();
-        Cube cube = new Cube(color);
+        Cube cube = new Cube(color, mock(CubeObserver.class));
         Field field1 = new Field();
         Field field2 = new Field();
         Field field3 = new Field();
@@ -42,7 +43,7 @@ public class ThrowCubeActionTest {
         Cubes cubes = new Cubes(Arrays.asList(cube), mock(CubesObserver.class));
         cubes.prepareCubes();
         ThrowCubeAction throwCubeAction = new ThrowCubeAction(board, cubes, player);
-        board.movePawns(1, new Cube(color));
+        board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
         cubes.prepareCubes();
 
         //When
