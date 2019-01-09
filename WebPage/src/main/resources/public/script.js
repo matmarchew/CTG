@@ -40,14 +40,14 @@ function setBetTileTextAction(img, color, value) {
 }
 
 function updateDesertTileOnField(img, action, fieldNumber, page) {
-    var desertTile = img.getElementById("DESERT_TILE" + fieldNumber);
+    var desertTile = img.getElementById("FIELD" + fieldNumber);
     if (action === "GET DESERT TILE") {
-        desertTile.style = "fill-opacity:0;";
+        desertTile.style.fill = "#feebd6ff";
     } else {
         if (page === "OASIS") {
-            desertTile.style = "fill-opacity:1;fill:#33cc00;";
+            desertTile.style.fill = "#33cc00";
         } else {
-            desertTile.style = "fill-opacity:1;fill:#cc3300;";
+            desertTile.style.fill = "#cc3300";
         }
     }
 }
