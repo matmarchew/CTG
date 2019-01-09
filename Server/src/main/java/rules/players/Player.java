@@ -87,6 +87,10 @@ public class Player implements Comparable<Player> {
         playerObserver.notifyWebAboutActualPlayer(login);
     }
 
+    public String getLogin() {
+        return login;
+    }
+
     @Override
     public int compareTo(Player player) {
         return player.points - points;

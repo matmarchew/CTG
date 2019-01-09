@@ -16,8 +16,9 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Game game = new Game(getBoard(), getConnectedPlayers(1), getCubes());
+        Game game = new Game(getBoard(), getConnectedPlayers(1), getCubes(), new GameObserver());
         game.startGame();
+        game.notifyGameObserver();
     }
 
     private static Players getConnectedPlayers(int numberOfPlayers) {

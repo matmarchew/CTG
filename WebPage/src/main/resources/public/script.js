@@ -17,13 +17,13 @@ function convertToValue(value) {
 }
 
 function updatePawnsOnField(img, pawns, fieldNumber) {
-    for(i=pawns.length-1; i >= 0; i--) {
+    for (i=pawns.length-1; i >= 0; i--) {
         var color = pawns[i];
         var pawn = img.getElementById("FIELD" + fieldNumber + "-" + (pawns.length - 1 - i));
         pawn.style="fill-opacity:1;fill:" + getColorToHash(color) + ";";
     }
 
-    for(i=pawns.length; i < 5; i++) {
+    for (i=pawns.length; i < 5; i++) {
         var pawn = img.getElementById("FIELD" + fieldNumber + "-" + i);
         pawn.style="fill-opacity:0;";
     }
@@ -65,6 +65,20 @@ function updatePlayer(img, login) {
     player.textContent="PLAYER: " + login
 }
 
+function updateFinalResults(img, players) {
+    var finalResults = img.getElementById("FINAL_RESULTS");
+    var x = parseFloat(finalResults.getAttribute('x'));
+    var y = parseFloat(finalResults.getAttribute('y'));
+    for (i=0; i<players.length; i++) {
+        var player = players[i];
+        var tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+        tspan.append(i+1 + ". " + player.LOGIN + " - " + player.POINTS);
+        tspan.setAttribute('x', x);
+        tspan.setAttribute('y', y + (i+1)*8);
+        finalResults.appendChild(tspan);
+    }
+}
+
 function doAction(img, json) {
     if (json.OBJECT_TYPE === "PAWNS") {
         updatePawnsOnField(img, json.PAWNS, json.FIELD_NUMBER);
@@ -76,6 +90,8 @@ function doAction(img, json) {
         refreshBetTile(img);
     } else if (json.OBJECT_TYPE === "PLAYER") {
         updatePlayer(img, json.LOGIN);
+    } else if (json.OBJECT_TYPE === "FINAL_RESULTS") {
+        updateFinalResults(img, json.PLAYERS);
     }
 }
 

@@ -27,7 +27,7 @@ public class GameTest {
         Players players = new Players(generatePlayers());
         Cubes cubes = spy(new Cubes(generateCubes(), mock(CubesObserver.class)));
         doNothing().when(cubes).shuffle();
-        Game game = new Game(board, players, cubes);
+        Game game = new Game(board, players, cubes, mock(GameObserver.class));
 
         //When
         game.startGame();

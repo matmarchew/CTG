@@ -1,6 +1,7 @@
 package rules;
 
 import communication.CustomJSONObject;
+import communication.observer.GameObserver;
 import rules.action.PlayerAction;
 import rules.board.Board;
 import rules.board.Pawn;
@@ -8,17 +9,20 @@ import rules.board.tiles.desert.DesertTile;
 import rules.players.Player;
 import rules.players.Players;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
     private final Board board;
     private final Players players; //players are in order
     private final Cubes cubes;
+    private final GameObserver gameObserver;
 
-    public Game(Board board, Players players, Cubes cubes) {
+    public Game(Board board, Players players, Cubes cubes, GameObserver gameObserver) {
         this.board = board;
         this.players = players;
         this.cubes = cubes;
+        this.gameObserver = gameObserver;
     }
 
     public void startGame() {
@@ -97,5 +101,16 @@ public class Game {
 
     public List<Player> gameResult() {
         return players.sortPlayersInDescendingOrder();
+    }
+
+    public void notifyGameObserver() {
+        List<CustomJSONObject> playerList = new LinkedList<>();
+        gameResult().forEach(player -> {
+            CustomJSONObject json = new CustomJSONObject();
+            json.put(Messages.LOGIN, player.getLogin());
+            json.put(Messages.POINTS, player.getPoints() + "");
+            playerList.add(json);
+        });
+        gameObserver.notifyWebAboutFinalResults(playerList);
     }
 }
