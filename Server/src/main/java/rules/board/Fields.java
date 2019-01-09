@@ -45,7 +45,11 @@ public class Fields {
     }
 
     private Field getFieldInPosition(int position) {
-        return position >= gameBoard.size() ? gameBoard.get(gameBoard.size() - 1) : gameBoard.get(position);
+        return gameBoard.get(position);
+    }
+
+    private int calculatePosition(int position) {
+        return position >= gameBoard.size() ? gameBoard.size() - 1 : position;
     }
 
     public int numberOfFields() {
@@ -67,7 +71,7 @@ public class Fields {
     }
 
     public void makePawnMoveToDestinationField(int position, List<Pawn> pawns) {
-        Field field = getFieldInPosition(position);
+        Field field = getFieldInPosition(calculatePosition(position));
         int additionalNumbersOfMoves = field.getBonusFromDesertTile();
         returnedDesertTile = field.getDesertTileAndClearIt();
 
@@ -75,7 +79,7 @@ public class Fields {
             returnedDesertTile.notifyDesertTileObserver(position, Messages.GET_DESERT_TILE, "");
 
         position += additionalNumbersOfMoves;
-        field = getFieldInPosition(position);
+        field = getFieldInPosition(calculatePosition(position));
         field.addPawns(pawns, additionalNumbersOfMoves);
 
         notifyFieldObserver(position);
@@ -116,6 +120,7 @@ public class Fields {
     }
 
     public void notifyFieldObserver(int fieldNumber) {
-        if(fieldNumber >= 0) fieldsObserver.createInfoForWeb(getFieldInPosition(fieldNumber), fieldNumber);
+        int calculatedFieldNumber = calculatePosition(fieldNumber);
+        if(fieldNumber >= 0) fieldsObserver.createInfoForWeb(getFieldInPosition(calculatedFieldNumber), calculatedFieldNumber);
     }
 }
