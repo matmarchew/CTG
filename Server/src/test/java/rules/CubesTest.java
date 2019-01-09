@@ -1,5 +1,6 @@
 package rules;
 
+import communication.observer.CubeObserver;
 import communication.observer.CubesObserver;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,7 +14,7 @@ public class CubesTest {
     @Test
     public void shouldCheckIfCubesAreNotAvailable() {
         //Given
-        Cube cube = new Cube(UUID.randomUUID().toString());
+        Cube cube = new Cube(UUID.randomUUID().toString(), mock(CubeObserver.class));
         Cubes cubes = new Cubes(Arrays.asList(cube), mock(CubesObserver.class));
 
         //When - THEN
@@ -23,7 +24,7 @@ public class CubesTest {
     @Test
     public void shouldCubesAreAvailable() {
         //Given
-        Cube cube = new Cube(UUID.randomUUID().toString());
+        Cube cube = new Cube(UUID.randomUUID().toString(), mock(CubeObserver.class));
         Cubes cubes = new Cubes(Arrays.asList(cube), mock(CubesObserver.class));
 
         //When
@@ -36,7 +37,7 @@ public class CubesTest {
     @Test
     public void shouldReturnNextCubeAndCubeIsNotAvailableNow() {
         //Given
-        Cube cube = new Cube(UUID.randomUUID().toString());
+        Cube cube = new Cube(UUID.randomUUID().toString(), mock(CubeObserver.class));
         Cubes cubes = new Cubes(Arrays.asList(cube), mock(CubesObserver.class));
         cubes.prepareCubes();
 

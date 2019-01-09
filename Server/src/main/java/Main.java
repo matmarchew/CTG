@@ -1,4 +1,4 @@
-import communication.observer.CubesObserver;
+import communication.observer.*;
 import rules.*;
 import rules.board.*;
 import rules.board.tiles.bet.BettingTile;
@@ -10,17 +10,15 @@ import rules.players.PlayerSocket;
 import rules.players.Players;
 import communication.CustomJSONObject;
 import communication.Server;
-import communication.observer.BettingTileObserver;
-import communication.observer.DesertTileObserver;
-import communication.observer.FieldsObserver;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Game game = new Game(getBoard(), getConnectedPlayers(1), getCubes());
+        Game game = new Game(getBoard(), getConnectedPlayers(1), getCubes(), new GameObserver());
         game.startGame();
+        game.notifyGameObserver();
     }
 
     private static Players getConnectedPlayers(int numberOfPlayers) {
@@ -38,18 +36,18 @@ public class Main {
             bettingCards.add(new BettingCard("GREEN", playerLogin));
             bettingCards.add(new BettingCard("WHITE", playerLogin));
 
-            players.add(new Player(ps, playerLogin , new BettingCards(bettingCards), new DesertTile(playerLogin, new DesertTileObserver())));
+            players.add(new Player(ps, playerLogin , new BettingCards(bettingCards), new DesertTile(playerLogin, new DesertTileObserver()), new PlayerObserver()));
         }
         return new Players(players);
     }
 
     private static Cubes getCubes() {
         List<Cube> cubeList = new LinkedList<>();
-        cubeList.add(new Cube("ORANGE"));
-        cubeList.add(new Cube("BLUE"));
-        cubeList.add(new Cube("YELLOW"));
-        cubeList.add(new Cube("GREEN"));
-        cubeList.add(new Cube("WHITE"));
+        cubeList.add(new Cube("ORANGE", new CubeObserver()));
+        cubeList.add(new Cube("BLUE", new CubeObserver()));
+        cubeList.add(new Cube("YELLOW", new CubeObserver()));
+        cubeList.add(new Cube("GREEN", new CubeObserver()));
+        cubeList.add(new Cube("WHITE", new CubeObserver()));
 
         return new Cubes(cubeList, new CubesObserver());
     }

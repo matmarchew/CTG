@@ -20,6 +20,7 @@ public class ThrowCubeAction implements PlayerAction {
     public void performAction() {
         Cube cube = cubes.getNextCube();
         int numberOfFieldsToPawnsBeMoved = cube.roll();
+        cube.notifyCubeObserver(numberOfFieldsToPawnsBeMoved);
         player.addPoints(1);
         board.movePawns(numberOfFieldsToPawnsBeMoved, cube);
     }

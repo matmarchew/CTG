@@ -1,5 +1,6 @@
 package rules.board;
 
+import communication.observer.CubeObserver;
 import communication.observer.DesertTileObserver;
 import org.junit.Assert;
 import org.junit.Test;
@@ -74,7 +75,7 @@ public class FieldTest {
         field.addPawns(Arrays.asList(pawn1, pawn2, pawn3, pawn4), 1);
 
         //When
-        boolean result = field.isPawnInThisField(new Cube(color));
+        boolean result = field.isPawnInThisField(new Cube(color, mock(CubeObserver.class)));
 
         //Then
         Assert.assertTrue(result);
@@ -91,7 +92,7 @@ public class FieldTest {
         field.addPawns(Arrays.asList(pawn1, pawn2, pawn3, pawn4), 1);
 
         //When
-        boolean result = field.isPawnInThisField(new Cube(UUID.randomUUID().toString()));
+        boolean result = field.isPawnInThisField(new Cube(UUID.randomUUID().toString(), mock(CubeObserver.class)));
 
         //Then
         Assert.assertTrue(!result);
@@ -109,7 +110,7 @@ public class FieldTest {
         field.addPawns(Arrays.asList(pawn1, pawn2, pawn3, pawn4), 1);
 
         //When
-        int result = field.getPawnPositionInStack(new Cube(color));
+        int result = field.getPawnPositionInStack(new Cube(color, mock(CubeObserver.class)));
 
         //Then
         Assert.assertTrue(result == 2);

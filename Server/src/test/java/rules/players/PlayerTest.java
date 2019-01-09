@@ -3,6 +3,7 @@ package rules.players;
 import communication.CustomJSONObject;
 import communication.observer.BettingTileObserver;
 import communication.observer.DesertTileObserver;
+import communication.observer.PlayerObserver;
 import org.junit.Assert;
 import org.junit.Test;
 import rules.board.BettingCard;
@@ -21,7 +22,7 @@ public class PlayerTest {
     @Test
     public void shouldAddPointsToPlayerUsingBetTilesAfterRound() {
         //Given
-        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class));
+        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
         String winningColor = UUID.randomUUID().toString();
         String runnerUpColor = UUID.randomUUID().toString();
         player.addBettingTileToPlayer(new BettingTile(winningColor, 5, mock(BettingTileObserver.class)));
@@ -40,7 +41,7 @@ public class PlayerTest {
         //Given
         String color = UUID.randomUUID().toString();
         BettingCard bettingCard = new BettingCard(color, UUID.randomUUID().toString());
-        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), new BettingCards(Arrays.asList(bettingCard)), mock(DesertTile.class));
+        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), new BettingCards(Arrays.asList(bettingCard)), mock(DesertTile.class), mock(PlayerObserver.class));
 
         //When
         BettingCard result = player.getBettingCardInColor(color);
@@ -53,7 +54,7 @@ public class PlayerTest {
     public void shouldReturnDesertTile() {
         //Given
         String playerLogin = UUID.randomUUID().toString();
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)), mock(PlayerObserver.class));
 
         //When
         DesertTile desertTile = player.getPlayerDesertTile();
@@ -66,7 +67,7 @@ public class PlayerTest {
     public void shouldSetDesertTile() {
         //Given
         String playerLogin = UUID.randomUUID().toString();
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)), mock(PlayerObserver.class));
         DesertTile desertTile = player.getPlayerDesertTile();
 
         //When
@@ -80,7 +81,7 @@ public class PlayerTest {
     @Test
     public void shouldAddPoints() {
         //Given
-        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class));
+        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
 
         //When
         player.addPoints(2);
@@ -93,7 +94,7 @@ public class PlayerTest {
     @Test
     public void shouldReturnTrueIfDesertTileIsNotUsed() {
         //Given
-        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class));
+        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
 
         //When
         boolean result = player.isHaveDesertTile();
@@ -105,7 +106,7 @@ public class PlayerTest {
     @Test
     public void shouldReturnFalseIfDesertTileIsUsed() {
         //Given
-        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class));
+        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
 
         //When
         player.getPlayerDesertTile();
@@ -125,7 +126,7 @@ public class PlayerTest {
         BettingCards bettingCards = new BettingCards(Arrays.asList(bettingCard1, bettingCard2));
         bettingCards.getBettingCardInColor(color2);
 
-        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), bettingCards, mock(DesertTile.class));
+        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), bettingCards, mock(DesertTile.class), mock(PlayerObserver.class));
 
         //When
         List<CustomJSONObject> result = player.getUsedBetCards();

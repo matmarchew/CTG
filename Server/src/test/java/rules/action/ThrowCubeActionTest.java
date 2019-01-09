@@ -1,7 +1,9 @@
 package rules.action;
 
+import communication.observer.CubeObserver;
 import communication.observer.CubesObserver;
 import communication.observer.FieldsObserver;
+import communication.observer.PlayerObserver;
 import org.junit.Assert;
 import org.junit.Test;
 import rules.Cube;
@@ -24,7 +26,7 @@ public class ThrowCubeActionTest {
     public void shouldDrawnPawnIsMove() {
         //Given
         String color = UUID.randomUUID().toString();
-        Cube cube = new Cube(color);
+        Cube cube = new Cube(color, mock(CubeObserver.class));
         Field field1 = new Field();
         Field field2 = new Field();
         Field field3 = new Field();
@@ -37,11 +39,11 @@ public class ThrowCubeActionTest {
         Fields fields = new Fields(tmpFields, mock(FieldsObserver.class));
         Board board = new Board(fields, mock(BettingTiles.class));
         String playerLogin = UUID.randomUUID().toString();
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class), mock(PlayerObserver.class));
         Cubes cubes = new Cubes(Arrays.asList(cube), mock(CubesObserver.class));
         cubes.prepareCubes();
         ThrowCubeAction throwCubeAction = new ThrowCubeAction(board, cubes, player);
-        board.movePawns(1, new Cube(color));
+        board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
         cubes.prepareCubes();
 
         //When

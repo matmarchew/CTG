@@ -1,6 +1,7 @@
 package rules.players;
 
 import communication.observer.BettingTileObserver;
+import communication.observer.PlayerObserver;
 import org.junit.Assert;
 import org.junit.Test;
 import rules.board.BettingCard;
@@ -20,7 +21,7 @@ public class PlayersTest {
     @Test
     public void shouldReturnFirstPlayer() {
         //Given
-        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class));
+        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
         Players players = new Players(Arrays.asList(player));
 
         //When
@@ -33,8 +34,8 @@ public class PlayersTest {
     @Test
     public void shouldReturnNextPlayer() {
         //Given
-        Player player1 = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class));
-        Player player2 = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class));
+        Player player1 = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
+        Player player2 = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
         Players players = new Players(Arrays.asList(player1, player2));
         players.getNextPlayer();
 
@@ -48,8 +49,8 @@ public class PlayersTest {
     @Test
     public void shouldReturnFirstPlayerAfterLastPlayerEndRound() {
         //Given
-        Player player1 = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class));
-        Player player2 = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class));
+        Player player1 = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
+        Player player2 = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
         Players players = new Players(Arrays.asList(player1, player2));
         players.getNextPlayer();
         players.getNextPlayer();
@@ -64,8 +65,8 @@ public class PlayersTest {
     @Test
     public void shouldReturnPlayersInDescendingOrderByPoints() {
         //Given
-        Player player1 = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class));
-        Player player2 = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class));
+        Player player1 = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
+        Player player2 = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
         Players players = new Players(Arrays.asList(player1, player2));
         String winningColor = UUID.randomUUID().toString();
         String runnerUpColor = UUID.randomUUID().toString();
@@ -84,8 +85,8 @@ public class PlayersTest {
         //Given
         String player1Login = UUID.randomUUID().toString();
         String player2Login = UUID.randomUUID().toString();
-        Player player1 = new Player(mock(PlayerSocket.class), player1Login, mock(BettingCards.class), mock(DesertTile.class));
-        Player player2 = new Player(mock(PlayerSocket.class), player2Login, mock(BettingCards.class), mock(DesertTile.class));
+        Player player1 = new Player(mock(PlayerSocket.class), player1Login, mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
+        Player player2 = new Player(mock(PlayerSocket.class), player2Login, mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
         Players players = new Players(Arrays.asList(player1, player2));
         String winningColor = UUID.randomUUID().toString();
         BettingFinalResult winningBet = new BettingFinalResult();

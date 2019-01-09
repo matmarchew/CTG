@@ -1,12 +1,16 @@
 package rules;
 
+import communication.observer.CubeObserver;
+
 import java.util.Random;
 
 public class Cube {
     private final String color;
+    private final CubeObserver cubeObserver;
 
-    public Cube(String color) {
+    public Cube(String color, CubeObserver cubeObserver) {
         this.color = color;
+        this.cubeObserver = cubeObserver;
     }
 
     public int roll() {
@@ -15,6 +19,10 @@ public class Cube {
 
     public String getColor() {
         return color;
+    }
+
+    public void notifyCubeObserver(int value) {
+        cubeObserver.notifyWebAboutCube(color, value);
     }
 
     @Override

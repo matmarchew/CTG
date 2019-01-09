@@ -1,5 +1,6 @@
 package rules.action;
 
+import communication.observer.PlayerObserver;
 import org.junit.Assert;
 import org.junit.Test;
 import rules.Messages;
@@ -23,7 +24,7 @@ public class PutBettingCardToFinalBettingStackActionTest {
         String color = UUID.randomUUID().toString();
         String playerLogin = UUID.randomUUID().toString();
         Board board = new Board(mock(Fields.class), mock(BettingTiles.class));
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class), mock(PlayerObserver.class));
         PutBettingCardToFinalBettingStackAction putBettingCardToFinalBettingStackAction = new PutBettingCardToFinalBettingStackAction(board, player, color, Messages.WINNER_STACK);
         Players players = new Players(Arrays.asList(player));
 
@@ -42,7 +43,7 @@ public class PutBettingCardToFinalBettingStackActionTest {
         String color = UUID.randomUUID().toString();
         String playerLogin = UUID.randomUUID().toString();
         Board board = new Board(mock(Fields.class), mock(BettingTiles.class));
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class), mock(PlayerObserver.class));
         PutBettingCardToFinalBettingStackAction putBettingCardToFinalBettingStackAction = new PutBettingCardToFinalBettingStackAction(board, player, color, Messages.LOSER_STACK);
         Players players = new Players(Arrays.asList(player));
 
