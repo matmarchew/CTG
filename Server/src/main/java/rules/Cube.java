@@ -22,7 +22,7 @@ public class Cube {
     }
 
     public void notifyCubeObserver(int value) {
-        cubeObserver.notifyWebAboutCube(color, value);
+        cubeObserver.createInfoForWeb(color, value);
     }
 
     @Override

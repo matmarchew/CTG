@@ -121,6 +121,8 @@ public class Fields {
 
     public void notifyFieldObserver(int fieldNumber) {
         int calculatedFieldNumber = calculatePosition(fieldNumber);
-        if(fieldNumber >= 0) fieldsObserver.createInfoForWeb(getFieldInPosition(calculatedFieldNumber), calculatedFieldNumber);
+
+        if(fieldNumber >= 0)
+            fieldsObserver.createInfoForWeb(getFieldInPosition(calculatedFieldNumber).getPawns(), calculatedFieldNumber);
     }
 }

@@ -84,7 +84,7 @@ public class Player implements Comparable<Player> {
     }
 
     public void notifyPlayerObserver() {
-        playerObserver.notifyWebAboutActualPlayer(login);
+        playerObserver.createInfoForWeb(login);
     }
 
     public String getLogin() {

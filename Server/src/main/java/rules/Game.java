@@ -111,6 +111,6 @@ public class Game {
             json.put(Messages.POINTS, player.getPoints() + "");
             playerList.add(json);
         });
-        gameObserver.notifyWebAboutFinalResults(playerList);
+        gameObserver.createInfoForWeb(playerList);
     }
 }

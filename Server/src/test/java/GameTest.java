@@ -49,7 +49,7 @@ public class GameTest {
             field.add(new Field());
         }
         FieldsObserver fieldsObserver = mock(FieldsObserver.class);
-        doNothing().when(fieldsObserver).createInfoForWeb(any(Field.class), anyInt());
+        doNothing().when(fieldsObserver).createInfoForWeb(any(List.class), anyInt());
         return new Fields(field, fieldsObserver);
     }
 

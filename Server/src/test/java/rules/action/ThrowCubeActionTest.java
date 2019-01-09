@@ -1,9 +1,6 @@
 package rules.action;
 
-import communication.observer.CubeObserver;
-import communication.observer.CubesObserver;
-import communication.observer.FieldsObserver;
-import communication.observer.PlayerObserver;
+import communication.observer.*;
 import org.junit.Assert;
 import org.junit.Test;
 import rules.Cube;

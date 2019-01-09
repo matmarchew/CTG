@@ -6,7 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class WebPageSocket {
-    public static void sendMessageToWebPage(String message) {
+    public void sendMessageToWebPage(String message) {
         try {
             URL url = new URL("http://172.30.0.4:8080/status/");
             HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();

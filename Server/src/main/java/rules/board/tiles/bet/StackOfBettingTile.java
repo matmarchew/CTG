@@ -1,7 +1,5 @@
 package rules.board.tiles.bet;
 
-import communication.observer.BettingTileObserver;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,14 +18,14 @@ public class StackOfBettingTile {
         if (unusedBettingTiles.size() > 0)
             return unusedBettingTiles.get(0);
         else
-            return new BettingTile(bettingTileColorInStack, 0, new BettingTileObserver());
+            return new BettingTile(bettingTileColorInStack, 0, null);
     }
 
     public BettingTile getTopBettingTileAndMarkedItAsUsed() {
         if (unusedBettingTiles.size() > 0)
             return unusedBettingTiles.remove(0);
         else
-            return new BettingTile(bettingTileColorInStack, 0, new BettingTileObserver());
+            return new BettingTile(bettingTileColorInStack, 0, null);
     }
 
     public void prepareBettingTiles() {

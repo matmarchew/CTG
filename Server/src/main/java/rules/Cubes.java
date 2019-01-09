@@ -35,6 +35,6 @@ public class Cubes {
     }
 
     public void notifyCubesObserver() {
-        cubesObserver.refreshBoard();
+        cubesObserver.createInfoForWeb();
     }
 }
