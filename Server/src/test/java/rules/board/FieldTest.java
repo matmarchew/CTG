@@ -4,7 +4,6 @@ import communication.observer.DesertTileObserver;
 import org.junit.Assert;
 import org.junit.Test;
 import rules.board.tiles.desert.DesertTile;
-import rules.board.tiles.desert.DesertTileFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -120,7 +119,7 @@ public class FieldTest {
         //Given
         Field field = new Field();
         String playerLogin = UUID.randomUUID().toString();
-        DesertTile desertTile = new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory());
+        DesertTile desertTile = new DesertTile(playerLogin, mock(DesertTileObserver.class));
 
         //When
         field.putDesertTile(desertTile);
@@ -147,7 +146,7 @@ public class FieldTest {
         //Given
         Field field = new Field();
         String playerLogin = UUID.randomUUID().toString();
-        DesertTile desertTile = new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory());
+        DesertTile desertTile = new DesertTile(playerLogin, mock(DesertTileObserver.class));
         field.putDesertTile(desertTile);
 
         //When
@@ -179,7 +178,7 @@ public class FieldTest {
     public void shouldReturnTrueIfFieldContainsDesertTile() {
         //Given
         Field field = new Field();
-        field.putDesertTile(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class), new DesertTileFactory()));
+        field.putDesertTile(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class)));
 
         //When
         boolean result = field.containsDesertTile();

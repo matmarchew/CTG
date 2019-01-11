@@ -4,8 +4,8 @@ import communication.CustomJSONObject;
 import communication.WebPageSocket;
 import rules.Messages;
 
-public class CubesObserver extends Observer {
-    public CubesObserver(WebPageSocket webPageSocket) {
+public class BoardObserver extends Observer {
+    public BoardObserver(WebPageSocket webPageSocket) {
         super(webPageSocket);
     }
 

@@ -22,10 +22,7 @@ public class StackOfBettingTile {
     }
 
     public BettingTile getTopBettingTileAndMarkedItAsUsed() {
-        if (unusedBettingTiles.size() > 0)
-            return unusedBettingTiles.remove(0);
-        else
-            return new BettingTile(bettingTileColorInStack, 0, null);
+        return unusedBettingTiles.remove(0);
     }
 
     public void prepareBettingTiles() {

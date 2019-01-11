@@ -6,10 +6,8 @@ public class DesertTile {
     private final String playerLogin;
     private DesertTilePage activeDesertTilePage;
     private final DesertTileObserver desertTileObserver;
-    private final DesertTileFactory desertTileFactory;
 
-    public DesertTile(String playerLogin, DesertTileObserver desertTileObserver, DesertTileFactory desertTileFactory) {
-        this.desertTileFactory = desertTileFactory;
+    public DesertTile(String playerLogin, DesertTileObserver desertTileObserver) {
         this.activeDesertTilePage = new UnclassifiedDesertTilePage();
         this.playerLogin = playerLogin;
         this.desertTileObserver = desertTileObserver;
@@ -19,12 +17,12 @@ public class DesertTile {
         return activeDesertTilePage.getBonusPoints();
     }
 
-    public void notifyDesertTileObserver(int fieldNumber, String message, String desertTilePage) {
+    public void notifyDesertTileObserver(int fieldNumber, String message, DesertTilePage desertTilePage) {
         desertTileObserver.createInfoForWeb(fieldNumber, message, desertTilePage);
     }
 
-    public void switchPageToActive(String desertTilePage) {
-        setActiveDesertTilePage(desertTileFactory.getActivePage(desertTilePage));
+    public void switchPageToActive(DesertTilePage desertTilePage) {
+        setActiveDesertTilePage(desertTilePage);
     }
 
     public void switchPageToNonActive() {

@@ -24,15 +24,26 @@ public class Player implements Comparable<Player> {
     private DesertTile desertTile;
     private int points;
     private final PlayerObserver playerObserver;
+    private final PlayerActionFactory playerActionFactory;
 
-    public Player(PlayerSocket socket, String login, BettingCards bettingCards, DesertTile desertTile, PlayerObserver playerObserver) {
+    public Player(PlayerSocket socket, String login, BettingCards bettingCards,
+                  DesertTile desertTile, PlayerObserver playerObserver, PlayerActionFactory playerActionFactory) {
         this.socket = socket;
         this.login = login;
         this.playerObserver = playerObserver;
+        this.playerActionFactory = playerActionFactory;
         this.points = 0;
         bettingTiles = new LinkedList<>();
         this.desertTile = desertTile;
         this.bettingCards = bettingCards;
+    }
+
+    public void addBettingTileToPlayer(BettingTile bettingTile) {
+        bettingTiles.add(bettingTile);
+    }
+
+    public void addPoints(int points) {
+        this.points += points;
     }
 
     public void calculatePointsAfterRound(Pawn winner, Pawn runnerUp) {
@@ -46,16 +57,12 @@ public class Player implements Comparable<Player> {
         bettingTiles.clear();
     }
 
-    public void sendMessageToMobile(String start) {
-        socket.sendMessageToAndroid(start);
-    }
-
-    public void addBettingTileToPlayer(BettingTile bettingTile) {
-        bettingTiles.add(bettingTile);
-    }
-
     public BettingCard getBettingCardInColor(String color) {
         return bettingCards.getBettingCardInColor(color);
+    }
+
+    public PlayerAction getPlayerAction(Board board, Cubes cubes) {
+        return playerActionFactory.getPlayerActionFromJson(socket.receiveMessageFromAndroid(), this, board, cubes);
     }
 
     public DesertTile getPlayerDesertTile() {
@@ -64,31 +71,38 @@ public class Player implements Comparable<Player> {
         return tmpDesertTile;
     }
 
-    public void setDesertTile(DesertTile desertTile) {
-        this.desertTile = desertTile;
+    public List<CustomJSONObject> getUsedBetCards() {
+        List<CustomJSONObject> jsonList = new LinkedList<>();
+        bettingCards.getUsedBettingCards().forEach(card -> {
+            CustomJSONObject json = new CustomJSONObject();
+            json.put(Messages.COLOR, card.toString());
+            jsonList.add(json);
+        });
+        return jsonList;
     }
 
-    public void addPoints(int points) {
-        this.points += points;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public PlayerAction getPlayerAction(Board board, Cubes cubes) {
-        String message = socket.receiveMessageFromAndroid();
-        CustomJSONObject json = new CustomJSONObject();
-        json.getJSONObjectFromString(message);
-        return PlayerActionFactory.getPlayerActionFromJson(json, this, board, cubes);
+    public Boolean isHaveDesertTile() {
+        return desertTile != null;
     }
 
     public void notifyPlayerObserver() {
         playerObserver.createInfoForWeb(login);
     }
 
+    public void sendMessageToMobile(String start) {
+        socket.sendMessageToAndroid(start);
+    }
+
     public String getLogin() {
         return login;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setDesertTile(DesertTile desertTile) {
+        this.desertTile = desertTile;
     }
 
     @Override
@@ -101,19 +115,5 @@ public class Player implements Comparable<Player> {
         if (this == o) return true;
         if (o != null) return o.equals(login);
         else return false;
-    }
-
-    public List<CustomJSONObject> getUsedBetCards() {
-        List<CustomJSONObject> jsonList = new LinkedList<>();
-        bettingCards.getBettingCards().forEach(card -> {
-            CustomJSONObject json = new CustomJSONObject();
-            json.put(Messages.COLOR, card.toString());
-            jsonList.add(json);
-        });
-        return jsonList;
-    }
-
-    public Boolean isHaveDesertTile() {
-        return desertTile != null;
     }
 }

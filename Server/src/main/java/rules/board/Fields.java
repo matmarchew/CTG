@@ -114,7 +114,7 @@ public class Fields {
         DesertTilePage desertTilePage = new UnclassifiedDesertTilePage();
 
         if(returnedDesertTile != null) {
-            returnedDesertTile.notifyDesertTileObserver(position, Messages.GET_DESERT_TILE, "");
+            returnedDesertTile.notifyDesertTileObserver(position, Messages.GET_DESERT_TILE, new UnclassifiedDesertTilePage());
             position += returnedDesertTile.getBonusPoints();
             desertTilePage = returnedDesertTile.getDesertTilePage();
             returnedDesertTile.switchPageToNonActive();

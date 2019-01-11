@@ -7,20 +7,15 @@ import org.junit.Assert;
 import org.junit.Test;
 import rules.Messages;
 
-import java.util.Random;
-import java.util.UUID;
-
-public class CubesObserverTest {
+public class BoardObserverTest {
     @Test
     public void shouldJsonMessageIsCorrectlyCreated() {
         //Given
         WebPageSocket webPageSocket = new WebPageSocketForTest();
-        CubesObserver cubesObserver = new CubesObserver(webPageSocket);
-        int value = new Random().nextInt();
-        String color = UUID.randomUUID().toString();
+        BoardObserver boardObserver = new BoardObserver(webPageSocket);
 
         //When
-        cubesObserver.createInfoForWeb();
+        boardObserver.createInfoForWeb();
 
         //Then
         CustomJSONObject json = ((WebPageSocketForTest) webPageSocket).getJson();

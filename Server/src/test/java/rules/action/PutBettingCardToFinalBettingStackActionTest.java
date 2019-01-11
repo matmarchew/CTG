@@ -1,5 +1,6 @@
 package rules.action;
 
+import communication.observer.BoardObserver;
 import communication.observer.PlayerObserver;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,9 +24,9 @@ public class PutBettingCardToFinalBettingStackActionTest {
         //Given
         String color = UUID.randomUUID().toString();
         String playerLogin = UUID.randomUUID().toString();
-        Board board = new Board(mock(Fields.class), mock(BettingTiles.class));
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class), mock(PlayerObserver.class));
-        PutBettingCardToFinalBettingStackAction putBettingCardToFinalBettingStackAction = new PutBettingCardToFinalBettingStackAction(board, player, color, Messages.WINNER_STACK);
+        Board board = new Board(mock(Fields.class), mock(BettingTiles.class), mock(BoardObserver.class));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class), mock(PlayerObserver.class), new PlayerActionFactory());
+        PutBettingCardToFinalBettingStackAction putBettingCardToFinalBettingStackAction = new PutBettingCardToFinalBettingStackAction(player, color, board.getSuitableFinalBettingStack(Messages.WINNER_STACK));
         Players players = new Players(Arrays.asList(player));
 
         //When
@@ -42,9 +43,9 @@ public class PutBettingCardToFinalBettingStackActionTest {
         //Given
         String color = UUID.randomUUID().toString();
         String playerLogin = UUID.randomUUID().toString();
-        Board board = new Board(mock(Fields.class), mock(BettingTiles.class));
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class), mock(PlayerObserver.class));
-        PutBettingCardToFinalBettingStackAction putBettingCardToFinalBettingStackAction = new PutBettingCardToFinalBettingStackAction(board, player, color, Messages.LOSER_STACK);
+        Board board = new Board(mock(Fields.class), mock(BettingTiles.class), mock(BoardObserver.class));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class), mock(PlayerObserver.class), new PlayerActionFactory());
+        PutBettingCardToFinalBettingStackAction putBettingCardToFinalBettingStackAction = new PutBettingCardToFinalBettingStackAction(player, color, board.getSuitableFinalBettingStack(Messages.LOSER_STACK));
         Players players = new Players(Arrays.asList(player));
 
         //When

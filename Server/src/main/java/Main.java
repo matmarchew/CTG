@@ -6,12 +6,12 @@ import rules.Cube;
 import rules.Cubes;
 import rules.Game;
 import rules.Messages;
+import rules.action.PlayerActionFactory;
 import rules.board.*;
 import rules.board.tiles.bet.BettingTile;
 import rules.board.tiles.bet.BettingTiles;
 import rules.board.tiles.bet.StackOfBettingTile;
 import rules.board.tiles.desert.DesertTile;
-import rules.board.tiles.desert.DesertTileFactory;
 import rules.players.Player;
 import rules.players.PlayerSocket;
 import rules.players.Players;
@@ -37,8 +37,7 @@ public class Main {
         List<Player> players = new LinkedList<>();
         for (int i = 0; i < numberOfPlayers; i++) {
             PlayerSocket ps = new PlayerSocket(server.getNewClient());
-            CustomJSONObject json = new CustomJSONObject();
-            json.getJSONObjectFromString(ps.receiveMessageFromAndroid());
+            CustomJSONObject json = ps.receiveMessageFromAndroid();
             String playerLogin = json.getString(Messages.LOGIN);
             List<BettingCard> bettingCards = new LinkedList<>();
             bettingCards.add(new BettingCard("ORANGE", playerLogin));
@@ -49,8 +48,8 @@ public class Main {
 
             players.add(new Player(ps, playerLogin ,
                                     new BettingCards(bettingCards),
-                                    new DesertTile(playerLogin, new DesertTileObserver(webPageSocket), new DesertTileFactory()),
-                                    new PlayerObserver(webPageSocket)));
+                                    new DesertTile(playerLogin, new DesertTileObserver(webPageSocket)),
+                                    new PlayerObserver(webPageSocket), new PlayerActionFactory()));
         }
         return new Players(players);
     }
@@ -63,7 +62,7 @@ public class Main {
         cubeList.add(new Cube("GREEN", new CubeObserver(webPageSocket)));
         cubeList.add(new Cube("WHITE", new CubeObserver(webPageSocket)));
 
-        return new Cubes(cubeList, new CubesObserver(webPageSocket));
+        return new Cubes(cubeList);
     }
 
     private static Board getBoard(WebPageSocket webPageSocket) {
@@ -106,6 +105,6 @@ public class Main {
 
         BettingTiles stacks = new BettingTiles(stackList);
 
-        return new Board(fields, stacks);
+        return new Board(fields, stacks, new BoardObserver(webPageSocket));
     }
 }

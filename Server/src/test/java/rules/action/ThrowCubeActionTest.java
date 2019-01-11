@@ -34,10 +34,10 @@ public class ThrowCubeActionTest {
         tmpFields.add(field3);
         tmpFields.add(field4);
         Fields fields = new Fields(tmpFields, mock(FieldsObserver.class));
-        Board board = new Board(fields, mock(BettingTiles.class));
+        Board board = new Board(fields, mock(BettingTiles.class), mock(BoardObserver.class));
         String playerLogin = UUID.randomUUID().toString();
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class), mock(PlayerObserver.class));
-        Cubes cubes = new Cubes(Arrays.asList(cube), mock(CubesObserver.class));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, new BettingCards(new LinkedList<>(Arrays.asList(new BettingCard(color, playerLogin)))), mock(DesertTile.class), mock(PlayerObserver.class), new PlayerActionFactory());
+        Cubes cubes = new Cubes(Arrays.asList(cube));
         cubes.prepareCubes();
         ThrowCubeAction throwCubeAction = new ThrowCubeAction(board, cubes, player);
         board.moveThePawns(1, color);

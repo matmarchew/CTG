@@ -19,6 +19,20 @@ public class Players {
         actualPlayerIndex = -1;
     }
 
+    public void calculatePointsAfterGameForStack(Pawn pawn, BettingFinalResult bettingFinalResult) {
+        List<String> winnerPlayersLogin = bettingFinalResult.getPlayersLoginFromBettingCardsInOrder(pawn,true);
+        for (int i = 0; i < winnerPlayersLogin.size(); i++) {
+            searchPlayerByLogin(winnerPlayersLogin.get(i)).addPoints(pointsForPlace(i));
+        }
+
+        List<String> loserPlayersLogin = bettingFinalResult.getPlayersLoginFromBettingCardsInOrder(pawn,false);
+        loserPlayersLogin.forEach(player -> searchPlayerByLogin(player).addPoints(-1));
+    }
+
+    public void calculatePointsForEveryPlayerAfterRound(Pawn winner, Pawn runnerUp) {
+        players.stream().forEach(player -> player.calculatePointsAfterRound(winner, runnerUp));
+    }
+
     public Player getNextPlayer() {
         actualPlayerIndex = nextPlayerIndex();
         return players.get(actualPlayerIndex);
@@ -31,24 +45,14 @@ public class Players {
         player.addPoints(1);
     }
 
-    public void calculatePointsForEveryPlayerAfterRound(Pawn winner, Pawn runnerUp) {
-        players.stream().forEach(player -> player.calculatePointsAfterRound(winner, runnerUp));
-    }
-
     public List<Player> sortPlayersInDescendingOrder() {
         List<Player> copyPlayers = new LinkedList<>(players);
         Collections.sort(copyPlayers);
         return copyPlayers;
     }
 
-    public void calculatePointsAfterGameForStack(Pawn pawn, BettingFinalResult bettingFinalResult) {
-        List<String> winnerPlayersLogin = bettingFinalResult.getPlayersLoginFromBettingCardsInOrder(pawn,true);
-        for (int i = 0; i < winnerPlayersLogin.size(); i++) {
-            searchPlayerByLogin(winnerPlayersLogin.get(i)).addPoints(pointsForPlace(i));
-        }
-
-        List<String> loserPlayersLogin = bettingFinalResult.getPlayersLoginFromBettingCardsInOrder(pawn,false);
-        loserPlayersLogin.forEach(player -> searchPlayerByLogin(player).addPoints(-1));
+    private int nextPlayerIndex() {
+        return (actualPlayerIndex + 1) % numberOfPlayers;
     }
 
     private int pointsForPlace(int position) {
@@ -58,10 +62,6 @@ public class Players {
             case 2 : return 3;
             default : return 2;
         }
-    }
-
-    private int nextPlayerIndex() {
-        return (actualPlayerIndex + 1) % numberOfPlayers;
     }
 
     private Player searchPlayerByLogin(String playerLogin) {

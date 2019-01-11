@@ -5,12 +5,12 @@ import communication.observer.FieldsObserver;
 import communication.observer.PlayerObserver;
 import org.junit.Assert;
 import org.junit.Test;
-import rules.Messages;
 import rules.board.BettingCards;
 import rules.board.Field;
 import rules.board.Fields;
 import rules.board.tiles.desert.DesertTile;
-import rules.board.tiles.desert.DesertTileFactory;
+import rules.board.tiles.desert.MirageDesertTilePage;
+import rules.board.tiles.desert.OasisDesertTilePage;
 import rules.players.Player;
 import rules.players.PlayerSocket;
 
@@ -28,8 +28,8 @@ public class PutDesertTilesOnBoardActionTest {
         List<Field> fields = new LinkedList<>();
         fields.add(field);
         String playerLogin = UUID.randomUUID().toString();
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory()), mock(PlayerObserver.class));
-        PutDesertTilesOnBoardAction putDesertTilesOnBoardAction = new PutDesertTilesOnBoardAction(new Fields(fields, mock(FieldsObserver.class)), player, Messages.OASIS_PAGE, "0");
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)), mock(PlayerObserver.class), new PlayerActionFactory());
+        PutDesertTilesOnBoardAction putDesertTilesOnBoardAction = new PutDesertTilesOnBoardAction(new Fields(fields, mock(FieldsObserver.class)), player, new OasisDesertTilePage(), 0);
 
         //When
         putDesertTilesOnBoardAction.performAction();
@@ -45,8 +45,8 @@ public class PutDesertTilesOnBoardActionTest {
         List<Field> fields = new LinkedList<>();
         fields.add(field);
         String playerLogin = UUID.randomUUID().toString();
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory()), mock(PlayerObserver.class));
-        PutDesertTilesOnBoardAction putDesertTilesOnBoardAction = new PutDesertTilesOnBoardAction(new Fields(fields, mock(FieldsObserver.class)), player, Messages.MIRAGE_PAGE, "0");
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)), mock(PlayerObserver.class), new PlayerActionFactory());
+        PutDesertTilesOnBoardAction putDesertTilesOnBoardAction = new PutDesertTilesOnBoardAction(new Fields(fields, mock(FieldsObserver.class)), player, new MirageDesertTilePage(), 0);
 
         //When
         putDesertTilesOnBoardAction.performAction();

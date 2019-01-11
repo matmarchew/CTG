@@ -20,6 +20,7 @@ public final class Messages {
     public static final String PAGE = "PAGE";
     public static final String OASIS_PAGE = "OASIS";
     public static final String MIRAGE_PAGE = "MIRAGE";
+    public static final String UNCLASSIFIED_PAGE = "UNCLASSIFIED";
 
     public static final String FIELD_NUMBER = "FIELD_NUMBER";
     public static final String COLOR = "COLOR";

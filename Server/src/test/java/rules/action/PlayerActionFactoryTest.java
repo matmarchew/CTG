@@ -18,9 +18,10 @@ public class PlayerActionFactoryTest {
         //Given
         CustomJSONObject jsonObject = new CustomJSONObject();
         jsonObject.put(Messages.ACTION_TYPE, Messages.THROW_CUBE);
+        PlayerActionFactory playerActionFactory = new PlayerActionFactory();
 
         //When
-        PlayerAction result = PlayerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
+        PlayerAction result = playerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
 
         //Then
         Assert.assertTrue(result instanceof ThrowCubeAction);
@@ -33,9 +34,10 @@ public class PlayerActionFactoryTest {
         jsonObject.put(Messages.ACTION_TYPE, Messages.PUT_BET_CARD);
         jsonObject.put(Messages.COLOR, "");
         jsonObject.put(Messages.STACK, Messages.WINNER_STACK);
+        PlayerActionFactory playerActionFactory = new PlayerActionFactory();
 
-        //Given
-        PlayerAction result = PlayerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
+        //When
+        PlayerAction result = playerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
 
         //Then
         Assert.assertTrue(result instanceof PutBettingCardToFinalBettingStackAction);
@@ -48,9 +50,10 @@ public class PlayerActionFactoryTest {
         jsonObject.put(Messages.ACTION_TYPE, Messages.PUT_DESERT_TILE);
         jsonObject.put(Messages.PAGE, Messages.MIRAGE_PAGE);
         jsonObject.put(Messages.FIELD_NUMBER, "3");
+        PlayerActionFactory playerActionFactory = new PlayerActionFactory();
 
         //When
-        PlayerAction result = PlayerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
+        PlayerAction result = playerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
 
         //Then
         Assert.assertTrue(result instanceof PutDesertTilesOnBoardAction);
@@ -62,9 +65,10 @@ public class PlayerActionFactoryTest {
         CustomJSONObject jsonObject = new CustomJSONObject();
         jsonObject.put(Messages.ACTION_TYPE, Messages.GET_BET_TILE);
         jsonObject.put(Messages.COLOR, "");
+        PlayerActionFactory playerActionFactory = new PlayerActionFactory();
 
         //When
-        PlayerAction result = PlayerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
+        PlayerAction result = playerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
 
         //Then
         Assert.assertTrue(result instanceof TakeBettingTileFromBoardAction);
@@ -75,9 +79,10 @@ public class PlayerActionFactoryTest {
         //Given
         CustomJSONObject jsonObject = new CustomJSONObject();
         jsonObject.put(Messages.ACTION_TYPE, UUID.randomUUID().toString());
+        PlayerActionFactory playerActionFactory = new PlayerActionFactory();
 
         //When
-        PlayerAction result = PlayerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
+        PlayerAction result = playerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
 
         //Then
         Assert.assertTrue(result instanceof EmptyAction);

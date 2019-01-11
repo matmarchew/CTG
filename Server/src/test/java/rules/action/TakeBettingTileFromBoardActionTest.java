@@ -26,7 +26,7 @@ public class TakeBettingTileFromBoardActionTest {
         String color = UUID.randomUUID().toString();
         StackOfBettingTile stackOfBettingTile = new StackOfBettingTile(new LinkedList<>(Arrays.asList(new BettingTile(color, 5, mock(BettingTileObserver.class)))));
         BettingTiles bettingTiles = new BettingTiles(new LinkedList<>(Arrays.asList(stackOfBettingTile)));
-        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class));
+        Player player = new Player(mock(PlayerSocket.class), UUID.randomUUID().toString(), mock(BettingCards.class), mock(DesertTile.class), mock(PlayerObserver.class), new PlayerActionFactory());
         TakeBettingTileFromBoardAction betTileFromBoardAction = new TakeBettingTileFromBoardAction(bettingTiles, player, color);
         stackOfBettingTile.prepareBettingTiles();
 

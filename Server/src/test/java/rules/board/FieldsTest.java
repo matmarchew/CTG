@@ -5,7 +5,6 @@ import communication.observer.FieldsObserver;
 import org.junit.Assert;
 import org.junit.Test;
 import rules.board.tiles.desert.DesertTile;
-import rules.board.tiles.desert.DesertTileFactory;
 import rules.board.tiles.desert.UnclassifiedDesertTilePage;
 
 import java.util.Arrays;
@@ -51,22 +50,6 @@ public class FieldsTest {
     }
 
     @Test
-    public void shouldReturnReturnedDesertTile() {
-        //Given
-        Field field = new Field();
-        String playerLogin = UUID.randomUUID().toString();
-        field.putDesertTile(new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory()));
-        Fields fields = new Fields(new LinkedList<>(Arrays.asList(field)), mock(FieldsObserver.class));
-        fields.moveThePawns(1, UUID.randomUUID().toString());
-
-        //When
-        DesertTile result = fields.getReturnedDesertTile();
-
-        //Then
-        Assert.assertTrue(result.equals(playerLogin));
-    }
-
-    @Test
     public void shouldMovePawns() {
         //Given
         Field field = new Field();
@@ -89,7 +72,7 @@ public class FieldsTest {
         Fields fields = new Fields(new LinkedList<>(Arrays.asList(field)), mock(FieldsObserver.class));
 
         //When
-        fields.putDesertTileToField(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class), new DesertTileFactory()), 0);
+        fields.putDesertTileToField(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class)), 0);
 
         //Then
         Assert.assertTrue(field.containsDesertTile());
@@ -106,7 +89,7 @@ public class FieldsTest {
         Field field6 = new Field();
         Field field7 = new Field();
         Fields fields = new Fields(new LinkedList<>(Arrays.asList(field1, field2, field3, field4, field5, field6, field7)), mock(FieldsObserver.class));
-        field4.putDesertTile(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class), new DesertTileFactory()));
+        field4.putDesertTile(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class)));
         new UnclassifiedDesertTilePage().addPawnsToField(field1, Arrays.asList(new Pawn(UUID.randomUUID().toString())));
         new UnclassifiedDesertTilePage().addPawnsToField(field2, Arrays.asList(new Pawn(UUID.randomUUID().toString())));
 

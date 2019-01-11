@@ -25,82 +25,18 @@ public class Game {
         this.gameObserver = gameObserver;
     }
 
+    public List<Player> gameResult() {
+        return players.sortPlayersInDescendingOrder();
+    }
+
     public void startGame() {
         prepareBoardBeforeGame();
         do {
             prepareBoardBeforeRound();
             playRound();
-            cubes.notifyCubesObserver();
             calculatePointsAfterRound();
-        } while (!isFinishedGame());
+        } while (!board.isGameFinished());
         calculatePointsAfterGame();
-    }
-
-    private void prepareBoardBeforeGame() {
-        cubes.prepareCubes();
-        selectStartPositionsForPawns();
-    }
-
-    private void prepareBoardBeforeRound() {
-        cubes.prepareCubes();
-        board.prepareBoard();
-    }
-
-    private void playRound() {
-        while (cubes.isCubeExists() && !isFinishedGame()) {
-            Player actualPlayer = players.getNextPlayer();
-            actualPlayer.notifyPlayerObserver();
-
-            sendActualStateToPlayer(actualPlayer);
-
-            PlayerAction action = actualPlayer.getPlayerAction(board, cubes);
-            action.performAction();
-            backDesertTileToPlayer(board.getReturnedDesertTile());
-        }
-    }
-
-    private void sendActualStateToPlayer(Player actualPlayer) {
-        CustomJSONObject json = new CustomJSONObject();
-        json.put(Messages.BET_CARD, actualPlayer.getUsedBetCards());
-        json.put(Messages.BET_TILES, board.getStacksOfBetTile().getTopBettingTileFromEveryStack());
-        json.put(Messages.FIELD_NUMBER, board.getFields().getFieldsWhereNoPutDesertTile());
-        json.put(Messages.DESERT_TILE, actualPlayer.isHaveDesertTile().toString());
-        json.put(Messages.STATE, Messages.START);
-        actualPlayer.sendMessageToMobile(json.toString());
-    }
-
-    private void calculatePointsAfterRound() {
-        List<Pawn> pawnFirstPlaces = board.getPawnsInOrder();
-        Pawn winner = pawnFirstPlaces.get(0);
-        Pawn runnerUp = pawnFirstPlaces.get(1);
-        players.calculatePointsForEveryPlayerAfterRound(winner, runnerUp);
-    }
-
-    private void calculatePointsAfterGame() {
-        List<Pawn> pawnFirstPlaces = board.getPawnsInOrder();
-        Pawn winner = pawnFirstPlaces.get(0);
-        Pawn loser = pawnFirstPlaces.get(pawnFirstPlaces.size() - 1);
-        board.calculatePointsAfterGame(winner, loser, players);
-    }
-
-    private void selectStartPositionsForPawns() {
-        while (cubes.isCubeExists()) {
-            Cube cube = cubes.getNextCube();
-            board.moveThePawns(cube.roll(), cube.getColor());
-        }
-    }
-
-    private void backDesertTileToPlayer(DesertTile desertTile) {
-        if (desertTile != null)
-            players.setDesertTileInPlayer(desertTile);
-    }
-
-    private boolean isFinishedGame() {
-        return board.isGameFinished();
-    }
-
-    public List<Player> gameResult() {
-        return players.sortPlayersInDescendingOrder();
     }
 
     public void notifyGameObserver() {
@@ -112,5 +48,64 @@ public class Game {
             playerList.add(json);
         });
         gameObserver.createInfoForWeb(playerList);
+    }
+
+    private void backDesertTileToPlayer(DesertTile desertTile) {
+        if (desertTile != null)
+            players.setDesertTileInPlayer(desertTile);
+    }
+
+    private void calculatePointsAfterGame() {
+        List<Pawn> pawnFirstPlaces = board.getPawnsInOrder();
+        Pawn winner = pawnFirstPlaces.get(0);
+        Pawn loser = pawnFirstPlaces.get(pawnFirstPlaces.size() - 1);
+        board.calculatePointsAfterGame(winner, loser, players);
+    }
+
+    private void calculatePointsAfterRound() {
+        List<Pawn> pawnFirstPlaces = board.getPawnsInOrder();
+        Pawn winner = pawnFirstPlaces.get(0);
+        Pawn runnerUp = pawnFirstPlaces.get(1);
+        players.calculatePointsForEveryPlayerAfterRound(winner, runnerUp);
+    }
+
+    private void playRound() {
+        while (cubes.isCubeExists() && !board.isGameFinished()) {
+            Player actualPlayer = players.getNextPlayer();
+            actualPlayer.notifyPlayerObserver();
+            sendActualStateToPlayer(actualPlayer);
+
+            PlayerAction action = actualPlayer.getPlayerAction(board, cubes);
+            action.performAction();
+            backDesertTileToPlayer(board.getReturnedDesertTile());
+        }
+    }
+
+    private void prepareBoardBeforeGame() {
+        cubes.prepareCubes();
+        selectStartPositionsForPawns();
+    }
+
+    private void prepareBoardBeforeRound() {
+        cubes.prepareCubes();
+        board.prepareBoard();
+        board.notifyBoardObserver();
+    }
+
+    private void selectStartPositionsForPawns() {
+        while (cubes.isCubeExists()) {
+            Cube cube = cubes.getNextCube();
+            board.moveThePawns(cube.roll(), cube.getColor());
+        }
+    }
+
+    private void sendActualStateToPlayer(Player actualPlayer) {
+        CustomJSONObject json = new CustomJSONObject();
+        json.put(Messages.BET_CARD, actualPlayer.getUsedBetCards());
+        json.put(Messages.BET_TILES, board.getStacksOfBetTile().getTopBettingTileFromEveryStack());
+        json.put(Messages.FIELD_NUMBER, board.getFields().getFieldsWhereNoPutDesertTile());
+        json.put(Messages.DESERT_TILE, actualPlayer.isHaveDesertTile().toString());
+        json.put(Messages.STATE, Messages.START);
+        actualPlayer.sendMessageToMobile(json.toString());
     }
 }

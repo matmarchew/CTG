@@ -34,7 +34,7 @@ public class BettingCardsTest {
         bettingCards.getBettingCardInColor(color2);
 
         //When
-        List<BettingCard> result = bettingCards.getBettingCards();
+        List<BettingCard> result = bettingCards.getUsedBettingCards();
 
         //Then
         Assert.assertTrue(result.get(0).equals(color2));

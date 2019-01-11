@@ -1,5 +1,6 @@
 package rules.board;
 
+import communication.observer.BoardObserver;
 import rules.Messages;
 import rules.board.tiles.bet.BettingTiles;
 import rules.board.tiles.desert.DesertTile;
@@ -12,16 +13,14 @@ public class Board {
     private final BettingTiles bettingTiles;
     private final BettingFinalResult bettingLoserStack;
     private final BettingFinalResult bettingWinnerStack;
+    private final BoardObserver boardObserver;
 
-    public Board(Fields fields, BettingTiles bettingTiles) {
+    public Board(Fields fields, BettingTiles bettingTiles, BoardObserver boardObserver) {
         this.fields = fields;
         this.bettingTiles = bettingTiles;
+        this.boardObserver = boardObserver;
         this.bettingLoserStack = new BettingFinalResult();
         this.bettingWinnerStack = new BettingFinalResult();
-    }
-
-    public void addBettingCardToStack(BettingCard bettingCard, String finalBettingStack) {
-        addBettingCardToSuitableStack(bettingCard, finalBettingStack);
     }
 
     public void calculatePointsAfterGame(Pawn winnerPawn, Pawn loserPawn, Players players) {
@@ -37,8 +36,20 @@ public class Board {
         return fields.getReturnedDesertTile();
     }
 
+    public BettingFinalResult getSuitableFinalBettingStack(String finalBettingStack) {
+        if (finalBettingStack.equals(Messages.WINNER_STACK)) {
+            return bettingWinnerStack;
+        } else {
+            return bettingLoserStack;
+        }
+    }
+
     public boolean isGameFinished() {
         return fields.isFinished();
+    }
+
+    public void notifyBoardObserver() {
+        boardObserver.createInfoForWeb();
     }
 
     public void moveThePawns(int numberOfFieldsToMove, String pawnColor) {
@@ -57,11 +68,4 @@ public class Board {
         return bettingTiles;
     }
 
-    private void addBettingCardToSuitableStack(BettingCard bettingCard, String finalBettingStack) {
-        if (finalBettingStack.equals(Messages.WINNER_STACK)) {
-            bettingWinnerStack.addBettingCardToFinalStack(bettingCard);
-        } else {
-            bettingLoserStack.addBettingCardToFinalStack(bettingCard);
-        }
-    }
 }

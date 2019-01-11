@@ -1,5 +1,7 @@
 package rules.players;
 
+import communication.CustomJSONObject;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -8,6 +10,17 @@ public class PlayerSocket {
 
     public PlayerSocket(Socket socket) {
         this.socket = socket;
+    }
+
+    public CustomJSONObject receiveMessageFromAndroid() {
+        String message = "";
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            message = in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return convertStringToJson(message);
     }
 
     public void sendMessageToAndroid(String message) {
@@ -22,14 +35,9 @@ public class PlayerSocket {
         }
     }
 
-    public String receiveMessageFromAndroid() {
-        String message = "";
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            message = in.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return message;
+    private CustomJSONObject convertStringToJson(String message) {
+        CustomJSONObject json = new CustomJSONObject();
+        json.getJSONObjectFromString(message);
+        return json;
     }
 }

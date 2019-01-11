@@ -73,22 +73,4 @@ public class StackOfBettingTileTest {
         //Then
         Assert.assertTrue(result.getValue() == 0);
     }
-
-    @Test
-    public void shouldReturnEmptyBetTileAfterTryToRemove() {
-        //Given
-        List<BettingTile> bettingTiles = new LinkedList<>();
-        bettingTiles.add(new BettingTile(UUID.randomUUID().toString(), 0, mock(BettingTileObserver.class)));
-        StackOfBettingTile stackOfBettingTile = new StackOfBettingTile(bettingTiles);
-        stackOfBettingTile.prepareBettingTiles();
-        stackOfBettingTile.getTopBettingTileAndMarkedItAsUsed();
-
-
-        //When
-        BettingTile result = stackOfBettingTile.getTopBettingTileAndMarkedItAsUsed();
-
-        //Then
-        Assert.assertTrue(result.getValue() == 0);
-    }
-
 }

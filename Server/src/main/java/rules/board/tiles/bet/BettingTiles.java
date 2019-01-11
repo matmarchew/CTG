@@ -13,18 +13,6 @@ public class BettingTiles {
         this.stacksOfBettingTile = new LinkedList<>(stacksOfBettingTile);
     }
 
-    public BettingTile getTopBettingTileFromStackInColor(String color) {
-        return getBettingStackInColor(color).getTopBettingTileAndMarkedItAsUsed();
-    }
-
-    public void prepareStacksOfBettingTile() {
-        stacksOfBettingTile.forEach(stackOfBettingTile -> stackOfBettingTile.prepareBettingTiles());
-    }
-
-    private StackOfBettingTile getBettingStackInColor(String color) {
-        return stacksOfBettingTile.stream().filter(stackOfBettingTile -> stackOfBettingTile.equals(color)).findFirst().get();
-    }
-
     public List<CustomJSONObject> getTopBettingTileFromEveryStack() {
         List<CustomJSONObject> bettingTiles = new LinkedList<>();
         stacksOfBettingTile.forEach(stackOfBettingTile -> {
@@ -35,5 +23,17 @@ public class BettingTiles {
             bettingTiles.add(json);
         });
         return bettingTiles;
+    }
+
+    public BettingTile getTopBettingTileFromStackInColor(String color) {
+        return getBettingStackInColor(color).getTopBettingTileAndMarkedItAsUsed();
+    }
+
+    public void prepareStacksOfBettingTile() {
+        stacksOfBettingTile.forEach(stackOfBettingTile -> stackOfBettingTile.prepareBettingTiles());
+    }
+
+    private StackOfBettingTile getBettingStackInColor(String color) {
+        return stacksOfBettingTile.stream().filter(stackOfBettingTile -> stackOfBettingTile.equals(color)).findFirst().get();
     }
 }

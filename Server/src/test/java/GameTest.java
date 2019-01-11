@@ -1,3 +1,4 @@
+import communication.CustomJSONObject;
 import communication.observer.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -5,12 +6,13 @@ import rules.Cube;
 import rules.Cubes;
 import rules.Game;
 import rules.Messages;
+import rules.action.PlayerActionFactory;
 import rules.board.*;
 import rules.board.tiles.bet.BettingTile;
-import rules.board.tiles.bet.StackOfBettingTile;
 import rules.board.tiles.bet.BettingTiles;
+import rules.board.tiles.bet.StackOfBettingTile;
 import rules.board.tiles.desert.DesertTile;
-import rules.board.tiles.desert.DesertTileFactory;
+import rules.board.tiles.desert.DesertTilePage;
 import rules.players.Player;
 import rules.players.PlayerSocket;
 import rules.players.Players;
@@ -24,9 +26,9 @@ public class GameTest {
     @Test
     public void shouldReturnValidResultsAfterGame() {
         //Given
-        Board board = new Board(generateFields(), generateStacksOfBetTile());
+        Board board = new Board(generateFields(), generateStacksOfBetTile(), mock(BoardObserver.class));
         Players players = new Players(generatePlayers());
-        Cubes cubes = spy(new Cubes(generateCubes(), mock(CubesObserver.class)));
+        Cubes cubes = spy(new Cubes(generateCubes()));
         doNothing().when(cubes).shuffle();
         Game game = new Game(board, players, cubes, mock(GameObserver.class));
 
@@ -76,28 +78,35 @@ public class GameTest {
         List<Player> players = new LinkedList<>();
         PlayerSocket playerSocket = mock(PlayerSocket.class);
         doNothing().when(playerSocket).sendMessageToAndroid(Messages.START);
+        CustomJSONObject json = new CustomJSONObject();
         when(playerSocket.receiveMessageFromAndroid()).thenReturn(
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_DESERT_TILE + "\",\"" + Messages.PAGE + "\":" + "\"" + Messages.MIRAGE_PAGE + "\",\"" + Messages.FIELD_NUMBER + "\":\"" + "3\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_DESERT_TILE + "\",\"" + Messages.PAGE + "\":" + "\"" + Messages.OASIS_PAGE + "\",\"" + Messages.FIELD_NUMBER + "\":\"" + "3\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.GET_BET_TILE + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.GET_BET_TILE + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[4] + "\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\",\"" + Messages.STACK + "\":\"" + Messages.WINNER_STACK +"\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\",\"" + Messages.STACK + "\":\"" + Messages.WINNER_STACK +"\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[1] + "\",\"" + Messages.STACK + "\":\"" + Messages.LOSER_STACK +"\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[1] + "\",\"" + Messages.STACK + "\":\"" + Messages.LOSER_STACK +"\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\",\"" + Messages.STACK + "\":\"" + Messages.LOSER_STACK +"\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.GET_BET_TILE + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[1] + "\"}",
-                "{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}"
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_DESERT_TILE + "\",\"" + Messages.PAGE + "\":" + "\"" + Messages.MIRAGE_PAGE + "\",\"" + Messages.FIELD_NUMBER + "\":\"" + "3\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_DESERT_TILE + "\",\"" + Messages.PAGE + "\":" + "\"" + Messages.OASIS_PAGE + "\",\"" + Messages.FIELD_NUMBER + "\":\"" + "3\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.GET_BET_TILE + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.GET_BET_TILE + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[4] + "\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\",\"" + Messages.STACK + "\":\"" + Messages.WINNER_STACK +"\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\",\"" + Messages.STACK + "\":\"" + Messages.WINNER_STACK +"\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[1] + "\",\"" + Messages.STACK + "\":\"" + Messages.LOSER_STACK +"\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[1] + "\",\"" + Messages.STACK + "\":\"" + Messages.LOSER_STACK +"\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.PUT_BET_CARD + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[2] + "\",\"" + Messages.STACK + "\":\"" + Messages.LOSER_STACK +"\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.GET_BET_TILE + "\",\"" + Messages.COLOR + "\":" + "\"" + COLORS[1] + "\"}"),
+                generateJson("{\"" + Messages.ACTION_TYPE + "\":\"" + Messages.THROW_CUBE + "\"}")
                 );
         for (int i = 0; i < 4; i++) {
             DesertTileObserver desertTileObserver = mock(DesertTileObserver.class);
-            doNothing().when(desertTileObserver).createInfoForWeb(anyInt(), anyString(), anyString());
-            players.add(new Player(playerSocket, Integer.toString(i + 1), generateBetCards(Integer.toString(i + 1)), new DesertTile(Integer.toString(i + 1), desertTileObserver, new DesertTileFactory()), mock(PlayerObserver.class)));
+            doNothing().when(desertTileObserver).createInfoForWeb(anyInt(), anyString(), any(DesertTilePage.class));
+            players.add(new Player(playerSocket, Integer.toString(i + 1), generateBetCards(Integer.toString(i + 1)), new DesertTile(Integer.toString(i + 1), desertTileObserver), mock(PlayerObserver.class), new PlayerActionFactory()));
         }
         return players;
+    }
+
+    private CustomJSONObject generateJson(String message) {
+        CustomJSONObject json = new CustomJSONObject();
+        json.getJSONObjectFromString(message);
+        return json;
     }
 
     private BettingCards generateBetCards(String playerLogin) {

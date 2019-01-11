@@ -1,17 +1,15 @@
 package rules.action;
 
 import rules.board.BettingCard;
-import rules.board.Board;
+import rules.board.BettingFinalResult;
 import rules.players.Player;
 
 public class PutBettingCardToFinalBettingStackAction implements PlayerAction {
-    private final Board board;
     private final Player player;
     private final String color;
-    private final String finalBettingStack;
+    private final BettingFinalResult finalBettingStack;
 
-    public PutBettingCardToFinalBettingStackAction(Board board, Player player, String color, String finalBettingStack) {
-        this.board = board;
+    public PutBettingCardToFinalBettingStackAction(Player player, String color, BettingFinalResult finalBettingStack) {
         this.player = player;
         this.color = color;
         this.finalBettingStack = finalBettingStack;
@@ -20,6 +18,6 @@ public class PutBettingCardToFinalBettingStackAction implements PlayerAction {
     @Override
     public void performAction() {
         BettingCard bettingCard = player.getBettingCardInColor(color);
-        board.addBettingCardToStack(bettingCard, finalBettingStack);
+        finalBettingStack.addBettingCardToFinalStack(bettingCard);
     }
 }
