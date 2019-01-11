@@ -40,14 +40,15 @@ public class ThrowCubeActionTest {
         Cubes cubes = new Cubes(Arrays.asList(cube), mock(CubesObserver.class));
         cubes.prepareCubes();
         ThrowCubeAction throwCubeAction = new ThrowCubeAction(board, cubes, player);
-        board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
+        board.moveThePawns(1, color);
         cubes.prepareCubes();
 
         //When
         throwCubeAction.performAction();
 
         //Then
-        Assert.assertTrue(fields.searchFieldOnThePawnIsStandingUsingCube(cube) >= 0);
+        Assert.assertTrue(field1.isPawnInThisField(color) || field2.isPawnInThisField(color) ||
+                field3.isPawnInThisField(color) || field4.isPawnInThisField(color));
     }
 
 }

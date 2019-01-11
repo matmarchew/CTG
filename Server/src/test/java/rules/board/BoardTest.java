@@ -1,14 +1,18 @@
 package rules.board;
 
-import communication.observer.*;
+import communication.observer.BettingTileObserver;
+import communication.observer.DesertTileObserver;
+import communication.observer.FieldsObserver;
+import communication.observer.PlayerObserver;
 import org.junit.Assert;
 import org.junit.Test;
-import rules.Cube;
 import rules.Messages;
 import rules.board.tiles.bet.BettingTile;
 import rules.board.tiles.bet.BettingTiles;
 import rules.board.tiles.bet.StackOfBettingTile;
 import rules.board.tiles.desert.DesertTile;
+import rules.board.tiles.desert.DesertTileFactory;
+import rules.board.tiles.desert.UnclassifiedDesertTilePage;
 import rules.players.Player;
 import rules.players.PlayerSocket;
 import rules.players.Players;
@@ -27,7 +31,7 @@ public class BoardTest {
         String color = UUID.randomUUID().toString();
 
         //When
-        board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
+        board.moveThePawns(1, color);
 
         //Then
         Assert.assertTrue(field.getNumberOfPawns() == 1);
@@ -41,10 +45,10 @@ public class BoardTest {
         Fields fields = new Fields(new LinkedList<>(Arrays.asList(field1, field2)), mock(FieldsObserver.class));
         Board board = new Board(fields, mock(BettingTiles.class));
         String color = UUID.randomUUID().toString();
-        board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
+        board.moveThePawns(1, color);
 
         //When
-        board.movePawns(3, new Cube(color, mock(CubeObserver.class)));
+        board.moveThePawns(3, color);
         boolean result = board.isGameFinished();
 
         //Then
@@ -59,10 +63,10 @@ public class BoardTest {
         Fields fields = new Fields(new LinkedList<>(Arrays.asList(field1, field2)), mock(FieldsObserver.class));
         Board board = new Board(fields, mock(BettingTiles.class));
         String color = UUID.randomUUID().toString();
-        board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
+        board.moveThePawns(1, color);
 
         //When
-        board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
+        board.moveThePawns(1, color);
 
         //Then
         Assert.assertTrue(field2.getNumberOfPawns() == 1);
@@ -128,8 +132,8 @@ public class BoardTest {
         Fields fields = new Fields(Arrays.asList(field), mock(FieldsObserver.class));
         Board board = new Board(fields, mock(BettingTiles.class));
         String playerLogin = UUID.randomUUID().toString();
-        fields.putDesertTileToField(new DesertTile(playerLogin, mock(DesertTileObserver.class)), 0);
-        board.movePawns(1, new Cube(UUID.randomUUID().toString(), mock(CubeObserver.class)));
+        fields.putDesertTileToField(new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory()), 0);
+        board.moveThePawns(1, UUID.randomUUID().toString());
 
         //When
         DesertTile result = board.getReturnedDesertTile();
@@ -144,8 +148,10 @@ public class BoardTest {
         Field field1 = new Field();
         Field field2 = new Field();
         String color = UUID.randomUUID().toString();
-        field1.addPawns(Arrays.asList(new Pawn(UUID.randomUUID().toString()), new Pawn(UUID.randomUUID().toString())), 1);
-        field2.addPawns(Arrays.asList(new Pawn(color), new Pawn(UUID.randomUUID().toString())), 1);
+        new UnclassifiedDesertTilePage().addPawnsToField(field1,
+                Arrays.asList(new Pawn(UUID.randomUUID().toString()), new Pawn(UUID.randomUUID().toString())));
+        new UnclassifiedDesertTilePage().addPawnsToField(field2,
+                Arrays.asList(new Pawn(color), new Pawn(UUID.randomUUID().toString())));
         Fields fields = new Fields(Arrays.asList(field2, field1), mock(FieldsObserver.class));
         Board board = new Board(fields, mock(BettingTiles.class));
 

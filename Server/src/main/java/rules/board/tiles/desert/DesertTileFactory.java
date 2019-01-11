@@ -3,8 +3,7 @@ package rules.board.tiles.desert;
 import rules.Messages;
 
 public class DesertTileFactory {
-
-    public static DesertTilePage getActivePage(String desertTilePage) {
+    public DesertTilePage getActivePage(String desertTilePage) {
         switch (desertTilePage) {
             case Messages.OASIS_PAGE : return new OasisDesertTilePage();
             case Messages.MIRAGE_PAGE : return new MirageDesertTilePage();

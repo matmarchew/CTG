@@ -1,12 +1,10 @@
 package rules.board;
 
-import communication.observer.CubeObserver;
 import communication.observer.DesertTileObserver;
 import org.junit.Assert;
 import org.junit.Test;
-import rules.Cube;
-import rules.Messages;
 import rules.board.tiles.desert.DesertTile;
+import rules.board.tiles.desert.DesertTileFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,10 +22,10 @@ public class FieldTest {
         Pawn pawn2 = new Pawn(UUID.randomUUID().toString());
         Pawn pawn3 = new Pawn(color);
         Pawn pawn4 = new Pawn(UUID.randomUUID().toString());
-        field.addPawns(Arrays.asList(pawn1, pawn2), 1);
+        field.addPawnsFromTheTop(Arrays.asList(pawn1, pawn2));
 
         //When
-        field.addPawns(Arrays.asList(pawn3, pawn4), -1);
+        field.addPawnsFromTheBottom(Arrays.asList(pawn3, pawn4));
 
         //Then
         Assert.assertTrue(field.getPawns().get(2).equals(color));
@@ -42,7 +40,7 @@ public class FieldTest {
         Pawn pawn2 = new Pawn(UUID.randomUUID().toString());
 
         //When
-        field.addPawns(Arrays.asList(pawn1, pawn2), 1);
+        field.addPawnsFromTheTop(Arrays.asList(pawn1, pawn2));
 
         //Then
         Assert.assertTrue(field.getPawns().get(0).equals(color));
@@ -52,12 +50,13 @@ public class FieldTest {
     public void shouldReturnNFirstPawnsReturnNElements() {
         //Given
         Field field = new Field();
-        Pawn pawn1 = new Pawn(UUID.randomUUID().toString());
+        String color = UUID.randomUUID().toString();
+        Pawn pawn1 = new Pawn(color);
         Pawn pawn2 = new Pawn(UUID.randomUUID().toString());
-        field.addPawns(Arrays.asList(pawn1, pawn2), 1);
+        field.addPawnsFromTheTop(Arrays.asList(pawn1, pawn2));
 
         //When
-        List<Pawn> nPawnsFromStack = field.getFirstNPawnsFromStack(1);
+        List<Pawn> nPawnsFromStack = field.getPawnsAbovePawnInColor(color);
 
         //Then
         Assert.assertTrue(nPawnsFromStack.size() == 1);
@@ -72,10 +71,10 @@ public class FieldTest {
         Pawn pawn2 = new Pawn(UUID.randomUUID().toString());
         Pawn pawn3 = new Pawn(color);
         Pawn pawn4 = new Pawn(UUID.randomUUID().toString());
-        field.addPawns(Arrays.asList(pawn1, pawn2, pawn3, pawn4), 1);
+        field.addPawnsFromTheTop(Arrays.asList(pawn1, pawn2, pawn3, pawn4));
 
         //When
-        boolean result = field.isPawnInThisField(new Cube(color, mock(CubeObserver.class)));
+        boolean result = field.isPawnInThisField(color);
 
         //Then
         Assert.assertTrue(result);
@@ -89,75 +88,13 @@ public class FieldTest {
         Pawn pawn2 = new Pawn(UUID.randomUUID().toString());
         Pawn pawn3 = new Pawn(UUID.randomUUID().toString());
         Pawn pawn4 = new Pawn(UUID.randomUUID().toString());
-        field.addPawns(Arrays.asList(pawn1, pawn2, pawn3, pawn4), 1);
+        field.addPawnsFromTheTop(Arrays.asList(pawn1, pawn2, pawn3, pawn4));
 
         //When
-        boolean result = field.isPawnInThisField(new Cube(UUID.randomUUID().toString(), mock(CubeObserver.class)));
+        boolean result = field.isPawnInThisField(UUID.randomUUID().toString());
 
         //Then
         Assert.assertTrue(!result);
-    }
-
-    @Test
-    public void shouldReturnPawnPositionInField() {
-        //Given
-        Field field = new Field();
-        String color = UUID.randomUUID().toString();
-        Pawn pawn1 = new Pawn(UUID.randomUUID().toString());
-        Pawn pawn2 = new Pawn(UUID.randomUUID().toString());
-        Pawn pawn3 = new Pawn(color);
-        Pawn pawn4 = new Pawn(UUID.randomUUID().toString());
-        field.addPawns(Arrays.asList(pawn1, pawn2, pawn3, pawn4), 1);
-
-        //When
-        int result = field.getPawnPositionInStack(new Cube(color, mock(CubeObserver.class)));
-
-        //Then
-        Assert.assertTrue(result == 2);
-    }
-
-    @Test
-    public void shouldReturnZeroIfDesertTileIsNull() {
-        //Given
-        Field field = new Field();
-
-        //When
-        int result = field.getBonusFromDesertTile();
-
-        //Then
-        Assert.assertTrue(result == 0);
-    }
-
-    @Test
-    public void shouldReturnOneIfDesertTileIsOnOasisPage() {
-        //Given
-        Field field = new Field();
-        String playerLogin = UUID.randomUUID().toString();
-        DesertTile desertTile = new DesertTile(playerLogin, mock(DesertTileObserver.class));
-        desertTile.switchPageToActive(Messages.OASIS_PAGE);
-        field.putDesertTile(desertTile);
-
-        //When
-        int result = field.getBonusFromDesertTile();
-
-        //Then
-        Assert.assertTrue(result == 1);
-    }
-
-    @Test
-    public void shouldReturnMinusOneIfDesertTileIsOnMiragePage() {
-        //Given
-        Field field = new Field();
-        String playerLogin = UUID.randomUUID().toString();
-        DesertTile desertTile = new DesertTile(playerLogin, mock(DesertTileObserver.class));
-        desertTile.switchPageToActive(Messages.MIRAGE_PAGE);
-        field.putDesertTile(desertTile);
-
-        //When
-        int result = field.getBonusFromDesertTile();
-
-        //Then
-        Assert.assertTrue(result == -1);
     }
 
     @Test
@@ -169,7 +106,7 @@ public class FieldTest {
         Pawn pawn2 = new Pawn(UUID.randomUUID().toString());
         Pawn pawn3 = new Pawn(color);
         Pawn pawn4 = new Pawn(UUID.randomUUID().toString());
-        field.addPawns(Arrays.asList(pawn1, pawn2, pawn3, pawn4), 1);
+        field.addPawnsFromTheTop(Arrays.asList(pawn1, pawn2, pawn3, pawn4));
 
         //When
         int result = field.getNumberOfPawns();
@@ -183,7 +120,7 @@ public class FieldTest {
         //Given
         Field field = new Field();
         String playerLogin = UUID.randomUUID().toString();
-        DesertTile desertTile = new DesertTile(playerLogin, mock(DesertTileObserver.class));
+        DesertTile desertTile = new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory());
 
         //When
         field.putDesertTile(desertTile);
@@ -210,7 +147,7 @@ public class FieldTest {
         //Given
         Field field = new Field();
         String playerLogin = UUID.randomUUID().toString();
-        DesertTile desertTile = new DesertTile(playerLogin, mock(DesertTileObserver.class));
+        DesertTile desertTile = new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory());
         field.putDesertTile(desertTile);
 
         //When
@@ -229,7 +166,7 @@ public class FieldTest {
         Pawn pawn2 = new Pawn(UUID.randomUUID().toString());
         Pawn pawn3 = new Pawn(color);
         Pawn pawn4 = new Pawn(UUID.randomUUID().toString());
-        field.addPawns(Arrays.asList(pawn1, pawn2, pawn3, pawn4), 1);
+        field.addPawnsFromTheTop(Arrays.asList(pawn1, pawn2, pawn3, pawn4));
 
         //When
         List<Pawn> pawns = field.getPawns();
@@ -242,7 +179,7 @@ public class FieldTest {
     public void shouldReturnTrueIfFieldContainsDesertTile() {
         //Given
         Field field = new Field();
-        field.putDesertTile(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class)));
+        field.putDesertTile(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class), new DesertTileFactory()));
 
         //When
         boolean result = field.containsDesertTile();

@@ -10,6 +10,7 @@ import rules.board.tiles.bet.BettingTile;
 import rules.board.tiles.bet.StackOfBettingTile;
 import rules.board.tiles.bet.BettingTiles;
 import rules.board.tiles.desert.DesertTile;
+import rules.board.tiles.desert.DesertTileFactory;
 import rules.players.Player;
 import rules.players.PlayerSocket;
 import rules.players.Players;
@@ -94,7 +95,7 @@ public class GameTest {
         for (int i = 0; i < 4; i++) {
             DesertTileObserver desertTileObserver = mock(DesertTileObserver.class);
             doNothing().when(desertTileObserver).createInfoForWeb(anyInt(), anyString(), anyString());
-            players.add(new Player(playerSocket, Integer.toString(i + 1), generateBetCards(Integer.toString(i + 1)), new DesertTile(Integer.toString(i + 1), desertTileObserver), mock(PlayerObserver.class)));
+            players.add(new Player(playerSocket, Integer.toString(i + 1), generateBetCards(Integer.toString(i + 1)), new DesertTile(Integer.toString(i + 1), desertTileObserver, new DesertTileFactory()), mock(PlayerObserver.class)));
         }
         return players;
     }

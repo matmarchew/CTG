@@ -13,7 +13,7 @@ public class DesertTileTest {
     @Test
     public void shouldReturn0IfDesertTilePageIsUnclassified() {
         //Given
-        DesertTile desertTile = new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class));
+        DesertTile desertTile = new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class), new DesertTileFactory());
 
         //When
         int result = desertTile.getBonusPoints();
@@ -25,7 +25,7 @@ public class DesertTileTest {
     @Test
     public void shouldReturnMinus1IfDesertTilePageIsMiragePage() {
         //Given
-        DesertTile desertTile = new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class));
+        DesertTile desertTile = new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class), new DesertTileFactory());
         desertTile.switchPageToActive(Messages.MIRAGE_PAGE);
 
         //When
@@ -38,7 +38,7 @@ public class DesertTileTest {
     @Test
     public void shouldReturn1IfDesertTilePageIsOasisPage() {
         //Given
-        DesertTile desertTile = new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class));
+        DesertTile desertTile = new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class), new DesertTileFactory());
         desertTile.switchPageToActive(Messages.OASIS_PAGE);
 
         //When
@@ -52,7 +52,7 @@ public class DesertTileTest {
     public void shouldReturnPlayerLogin() {
         //Given
         String login = UUID.randomUUID().toString();
-        DesertTile desertTile = new DesertTile(login, mock(DesertTileObserver.class));
+        DesertTile desertTile = new DesertTile(login, mock(DesertTileObserver.class), new DesertTileFactory());
 
         //When
         String result = desertTile.getPlayerLogin();

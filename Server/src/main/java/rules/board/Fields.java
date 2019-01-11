@@ -1,9 +1,10 @@
 package rules.board;
 
-import rules.Cube;
+import communication.observer.FieldsObserver;
 import rules.Messages;
 import rules.board.tiles.desert.DesertTile;
-import communication.observer.FieldsObserver;
+import rules.board.tiles.desert.DesertTilePage;
+import rules.board.tiles.desert.UnclassifiedDesertTilePage;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -21,73 +22,6 @@ public class Fields {
         this.gameBoard.add(finishField);
         returnedDesertTile = null;
         this.fieldsObserver = fieldsObserver;
-    }
-
-    public int searchFieldOnThePawnIsStandingUsingCube(Cube cube) {
-        for (int i = 0; i <= numberOfFields(); i++) {
-            if (getFieldInPosition(i).isPawnInThisField(cube))
-                return i;
-        }
-        return -1;
-    }
-
-    public List<Pawn> getPawnsInOrder() {
-        List<Pawn> pawns = new LinkedList<>();
-        for (int i = numberOfFields(); i >= 0; i--) {
-            Field field = getFieldInPosition(i);
-            pawns.addAll(field.getPawns());
-        }
-        return pawns;
-    }
-
-    public boolean isFinished() {
-        return finishField.getNumberOfPawns() > 0;
-    }
-
-    private Field getFieldInPosition(int position) {
-        return gameBoard.get(position);
-    }
-
-    private int calculatePosition(int position) {
-        return position >= gameBoard.size() ? gameBoard.size() - 1 : position;
-    }
-
-    public int numberOfFields() {
-        return gameBoard.size() - 1;
-    }
-
-    public List<Pawn> getPawnsToMoveFromField(int fieldPosition, Cube cube) {
-        if (fieldPosition < 0) return Arrays.asList(new Pawn(cube.getColor()));
-        Field field = gameBoard.get(fieldPosition);
-
-        int position = field.getPawnPositionInStack(cube);
-        return field.getFirstNPawnsFromStack(position + 1);
-    }
-
-    public DesertTile getReturnedDesertTile() {
-        DesertTile desertTileToReturn = returnedDesertTile;
-        returnedDesertTile = null;
-        return desertTileToReturn;
-    }
-
-    public void makePawnMoveToDestinationField(int position, List<Pawn> pawns) {
-        Field field = getFieldInPosition(calculatePosition(position));
-        int additionalNumbersOfMoves = field.getBonusFromDesertTile();
-        returnedDesertTile = field.getDesertTileAndClearIt();
-
-        if(returnedDesertTile != null)
-            returnedDesertTile.notifyDesertTileObserver(position, Messages.GET_DESERT_TILE, "");
-
-        position += additionalNumbersOfMoves;
-        field = getFieldInPosition(calculatePosition(position));
-        field.addPawns(pawns, additionalNumbersOfMoves);
-
-        notifyFieldObserver(position);
-    }
-
-    public void putDesertTileToField(DesertTile desertTile, int numberOfField) {
-        Field field = getFieldInPosition(numberOfField);
-        field.putDesertTile(desertTile);
     }
 
     public List<String> getFieldsWhereNoPutDesertTile() {
@@ -108,6 +42,47 @@ public class Fields {
         return result;
     }
 
+    public List<Pawn> getPawnsInOrder() {
+        List<Pawn> pawns = new LinkedList<>();
+        for (int i = numberOfFields(); i >= 0; i--) {
+            Field field = getFieldInPosition(i);
+            pawns.addAll(field.getPawns());
+        }
+        return pawns;
+    }
+
+    public DesertTile getReturnedDesertTile() {
+        DesertTile desertTileToReturn = returnedDesertTile;
+        returnedDesertTile = null;
+        return desertTileToReturn;
+    }
+
+    public boolean isFinished() {
+        return finishField.getNumberOfPawns() > 0;
+    }
+
+    public void moveThePawns(int numberOfFieldsToMove, String pawnColor) {
+        int fieldNumberWithPawnInColor = lookingForFieldNumberOnThePawnIsStanding(pawnColor);
+        List<Pawn> pawns = getPawnsToMoveFromField(fieldNumberWithPawnInColor, pawnColor);
+        notifyFieldObserver(fieldNumberWithPawnInColor);
+
+        int nextFieldPosition = fieldNumberWithPawnInColor + numberOfFieldsToMove;
+        makePawnMoveToDestinationField(nextFieldPosition, pawns);
+    }
+
+    public void putDesertTileToField(DesertTile desertTile, int numberOfField) {
+        Field field = getFieldInPosition(numberOfField);
+        field.putDesertTile(desertTile);
+    }
+
+    private int calculatePosition(int position) {
+        return position >= gameBoard.size() ? gameBoard.size() - 1 : position;
+    }
+
+    private Field getFieldInPosition(int position) {
+        return gameBoard.get(position);
+    }
+
     private int getNumberFirstEmptyFieldAfterFirstPawns() {
         boolean isPawn = false;
         for (int i = 0; i < numberOfFields(); i++) {
@@ -119,10 +94,44 @@ public class Fields {
         return 1;
     }
 
-    public void notifyFieldObserver(int fieldNumber) {
-        int calculatedFieldNumber = calculatePosition(fieldNumber);
+    private List<Pawn> getPawnsToMoveFromField(int fieldPosition, String pawnColor) {
+        if (fieldPosition == -1) return Arrays.asList(new Pawn(pawnColor));
+        return getFieldInPosition(fieldPosition).getPawnsAbovePawnInColor(pawnColor);
+    }
 
+    private int lookingForFieldNumberOnThePawnIsStanding(String pawnColor) {
+        for (int i = 0; i <= numberOfFields(); i++) {
+            if (getFieldInPosition(i).isPawnInThisField(pawnColor))
+                return i;
+        }
+        return -1;
+    }
+
+    private void makePawnMoveToDestinationField(int position, List<Pawn> pawns) {
+        position = calculatePosition(position);
+        Field field = getFieldInPosition(position);
+        returnedDesertTile = field.getDesertTileAndClearIt();
+        DesertTilePage desertTilePage = new UnclassifiedDesertTilePage();
+
+        if(returnedDesertTile != null) {
+            returnedDesertTile.notifyDesertTileObserver(position, Messages.GET_DESERT_TILE, "");
+            position += returnedDesertTile.getBonusPoints();
+            desertTilePage = returnedDesertTile.getDesertTilePage();
+            returnedDesertTile.switchPageToNonActive();
+            field = getFieldInPosition(position);
+        }
+
+        desertTilePage.addPawnsToField(field, pawns);
+
+        notifyFieldObserver(position);
+    }
+
+    private void notifyFieldObserver(int fieldNumber) {
         if(fieldNumber >= 0)
-            fieldsObserver.createInfoForWeb(getFieldInPosition(calculatedFieldNumber).getPawns(), calculatedFieldNumber);
+            fieldsObserver.createInfoForWeb(getFieldInPosition(fieldNumber).getPawns(), fieldNumber);
+    }
+
+    private int numberOfFields() {
+        return gameBoard.size() - 1;
     }
 }

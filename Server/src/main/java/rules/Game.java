@@ -38,7 +38,7 @@ public class Game {
 
     private void prepareBoardBeforeGame() {
         cubes.prepareCubes();
-        startPlacementPawnsOnTheBoard();
+        selectStartPositionsForPawns();
     }
 
     private void prepareBoardBeforeRound() {
@@ -47,7 +47,7 @@ public class Game {
     }
 
     private void playRound() {
-        while (cubes.isCubesExist() && !isFinishedGame()) {
+        while (cubes.isCubeExists() && !isFinishedGame()) {
             Player actualPlayer = players.getNextPlayer();
             actualPlayer.notifyPlayerObserver();
 
@@ -83,10 +83,10 @@ public class Game {
         board.calculatePointsAfterGame(winner, loser, players);
     }
 
-    private void startPlacementPawnsOnTheBoard() {
-        while (cubes.isCubesExist()) {
+    private void selectStartPositionsForPawns() {
+        while (cubes.isCubeExists()) {
             Cube cube = cubes.getNextCube();
-            board.movePawns(cube.roll(), cube);
+            board.moveThePawns(cube.roll(), cube.getColor());
         }
     }
 

@@ -18,7 +18,7 @@ public class CubesTest {
         Cubes cubes = new Cubes(Arrays.asList(cube), mock(CubesObserver.class));
 
         //When - THEN
-        Assert.assertFalse(cubes.isCubesExist());
+        Assert.assertFalse(cubes.isCubeExists());
     }
 
     @Test
@@ -31,7 +31,7 @@ public class CubesTest {
         cubes.prepareCubes();
 
         //Then
-        Assert.assertTrue(cubes.isCubesExist());
+        Assert.assertTrue(cubes.isCubeExists());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class CubesTest {
         Cube result = cubes.getNextCube();
 
         //Then
-        Assert.assertTrue(cube.equals(result) && !cubes.isCubesExist());
+        Assert.assertTrue(cube.equals(result) && !cubes.isCubeExists());
     }
 
 }

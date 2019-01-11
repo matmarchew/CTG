@@ -1,16 +1,20 @@
+import communication.CustomJSONObject;
+import communication.Server;
 import communication.WebPageSocket;
 import communication.observer.*;
-import rules.*;
+import rules.Cube;
+import rules.Cubes;
+import rules.Game;
+import rules.Messages;
 import rules.board.*;
 import rules.board.tiles.bet.BettingTile;
-import rules.board.tiles.bet.StackOfBettingTile;
 import rules.board.tiles.bet.BettingTiles;
+import rules.board.tiles.bet.StackOfBettingTile;
 import rules.board.tiles.desert.DesertTile;
+import rules.board.tiles.desert.DesertTileFactory;
 import rules.players.Player;
 import rules.players.PlayerSocket;
 import rules.players.Players;
-import communication.CustomJSONObject;
-import communication.Server;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -45,7 +49,7 @@ public class Main {
 
             players.add(new Player(ps, playerLogin ,
                                     new BettingCards(bettingCards),
-                                    new DesertTile(playerLogin, new DesertTileObserver(webPageSocket)),
+                                    new DesertTile(playerLogin, new DesertTileObserver(webPageSocket), new DesertTileFactory()),
                                     new PlayerObserver(webPageSocket)));
         }
         return new Players(players);

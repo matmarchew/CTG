@@ -1,12 +1,12 @@
 package rules.board;
 
-import communication.observer.CubeObserver;
 import communication.observer.DesertTileObserver;
 import communication.observer.FieldsObserver;
 import org.junit.Assert;
 import org.junit.Test;
-import rules.Cube;
 import rules.board.tiles.desert.DesertTile;
+import rules.board.tiles.desert.DesertTileFactory;
+import rules.board.tiles.desert.UnclassifiedDesertTilePage;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -17,27 +17,6 @@ import static org.mockito.Mockito.mock;
 
 public class FieldsTest {
     @Test
-    public void shouldReturnNumberFieldContainsPawnInColor() {
-        //Given
-        Field field = new Field();
-        String color = UUID.randomUUID().toString();
-        Pawn pawn1 = new Pawn(UUID.randomUUID().toString());
-        Pawn pawn2 = new Pawn(UUID.randomUUID().toString());
-        Pawn pawn3 = new Pawn(color);
-        Pawn pawn4 = new Pawn(UUID.randomUUID().toString());
-        field.addPawns(Arrays.asList(pawn1, pawn2, pawn3, pawn4), 1);
-        List<Field> tmpFields = new LinkedList<>();
-        tmpFields.add(field);
-        Fields fields = new Fields(tmpFields, mock(FieldsObserver.class));
-
-        //When
-        int result = fields.searchFieldOnThePawnIsStandingUsingCube(new Cube(color, mock(CubeObserver.class)));
-
-        //Then
-        Assert.assertTrue(result == 0);
-    }
-
-    @Test
     public void shouldReturnPawnsInOrder() {
         //Given
         Field field = new Field();
@@ -46,7 +25,7 @@ public class FieldsTest {
         Pawn pawn2 = new Pawn(UUID.randomUUID().toString());
         Pawn pawn3 = new Pawn(color);
         Pawn pawn4 = new Pawn(UUID.randomUUID().toString());
-        field.addPawns(Arrays.asList(pawn1, pawn2, pawn3, pawn4) ,1);
+        new UnclassifiedDesertTilePage().addPawnsToField(field, Arrays.asList(pawn1, pawn2, pawn3, pawn4));
         List<Field> tmpFields = new LinkedList<>();
         tmpFields.add(field);
         Fields fields = new Fields(tmpFields, mock(FieldsObserver.class));
@@ -56,38 +35,6 @@ public class FieldsTest {
 
         //Then
         Assert.assertTrue(result.get(2).equals(color));
-    }
-
-    @Test
-    public void shouldAddPawnsToFinishedField() {
-        //Given
-        Field field = new Field();
-        Fields fields = new Fields(new LinkedList<>(Arrays.asList(field)), mock(FieldsObserver.class));
-        String pawnColor = UUID.randomUUID().toString();
-        Pawn pawn = new Pawn(pawnColor);
-        List<Pawn> pawns = new LinkedList<>(Arrays.asList(pawn));
-
-        //When
-        fields.makePawnMoveToDestinationField(2, pawns);
-
-        //Then
-        Assert.assertTrue(fields.isFinished());
-    }
-
-    @Test
-    public void shouldCheckIfGameIsFinished() {
-        //Given
-        Field field = new Field();
-        Fields fields = new Fields(new LinkedList<>(Arrays.asList(field)), mock(FieldsObserver.class));
-        String pawnColor = UUID.randomUUID().toString();
-        Pawn pawn = new Pawn(pawnColor);
-        List<Pawn> pawns = new LinkedList<>(Arrays.asList(pawn));
-
-        //When
-        fields.makePawnMoveToDestinationField(1, pawns);
-
-        //Then
-        Assert.assertTrue(fields.isFinished());
     }
 
     @Test
@@ -104,61 +51,13 @@ public class FieldsTest {
     }
 
     @Test
-    public void shouldReturnNumberOfFields() {
-        //Given
-        Field field = new Field();
-        Fields fields = new Fields(new LinkedList<>(Arrays.asList(field)), mock(FieldsObserver.class));
-
-        //When
-        int result = fields.numberOfFields();
-
-        //Then
-        Assert.assertTrue(result == 1);
-    }
-
-    @Test
-    public void shouldReturnStartingPawn() {
-        //Given
-        Cube cube = new Cube(UUID.randomUUID().toString(), mock(CubeObserver.class));
-        Field field = new Field();
-        Fields fields = new Fields(new LinkedList<>(Arrays.asList(field)), mock(FieldsObserver.class));
-
-        //When
-        List<Pawn> result = fields.getPawnsToMoveFromField(-1, cube);
-
-        //Then
-        Assert.assertTrue(result.size() == 1);
-    }
-
-    @Test
-    public void shouldReturnPawnsFromField() {
-        //Given
-        String color = UUID.randomUUID().toString();
-        Cube cube = new Cube(color, mock(CubeObserver.class));
-        Pawn pawn1 = new Pawn(UUID.randomUUID().toString());
-        Pawn pawn2 = new Pawn(UUID.randomUUID().toString());
-        Pawn pawn3 = new Pawn(color);
-        Pawn pawn4 = new Pawn(UUID.randomUUID().toString());
-        Field field = new Field();
-        field.addPawns(Arrays.asList(pawn1, pawn2, pawn3, pawn4), 1);
-        Fields fields = new Fields(new LinkedList<>(Arrays.asList(field)), mock(FieldsObserver.class));
-
-        //When
-        List<Pawn> result = fields.getPawnsToMoveFromField(0, cube);
-
-        //Then
-        Assert.assertTrue(result.size() == 3);
-    }
-
-    @Test
     public void shouldReturnReturnedDesertTile() {
         //Given
         Field field = new Field();
         String playerLogin = UUID.randomUUID().toString();
-        field.putDesertTile(new DesertTile(playerLogin, mock(DesertTileObserver.class)));
-        Pawn pawn = new Pawn(UUID.randomUUID().toString());
+        field.putDesertTile(new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory()));
         Fields fields = new Fields(new LinkedList<>(Arrays.asList(field)), mock(FieldsObserver.class));
-        fields.makePawnMoveToDestinationField(0, Arrays.asList(pawn));
+        fields.moveThePawns(1, UUID.randomUUID().toString());
 
         //When
         DesertTile result = fields.getReturnedDesertTile();
@@ -171,11 +70,13 @@ public class FieldsTest {
     public void shouldMovePawns() {
         //Given
         Field field = new Field();
-        Pawn pawn = new Pawn(UUID.randomUUID().toString());
+        String pawnColor = UUID.randomUUID().toString();
+        Pawn pawn = new Pawn(pawnColor);
         Fields fields = new Fields(new LinkedList<>(Arrays.asList(field)), mock(FieldsObserver.class));
+        new UnclassifiedDesertTilePage().addPawnsToField(field, Arrays.asList(pawn));
 
         //When
-        fields.makePawnMoveToDestinationField(1, Arrays.asList(pawn));
+        fields.moveThePawns(1, pawnColor);
 
         //Then
         Assert.assertTrue(fields.isFinished());
@@ -188,7 +89,7 @@ public class FieldsTest {
         Fields fields = new Fields(new LinkedList<>(Arrays.asList(field)), mock(FieldsObserver.class));
 
         //When
-        fields.putDesertTileToField(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class)), 0);
+        fields.putDesertTileToField(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class), new DesertTileFactory()), 0);
 
         //Then
         Assert.assertTrue(field.containsDesertTile());
@@ -205,9 +106,9 @@ public class FieldsTest {
         Field field6 = new Field();
         Field field7 = new Field();
         Fields fields = new Fields(new LinkedList<>(Arrays.asList(field1, field2, field3, field4, field5, field6, field7)), mock(FieldsObserver.class));
-        field4.putDesertTile(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class)));
-        fields.makePawnMoveToDestinationField(0, Arrays.asList(new Pawn(UUID.randomUUID().toString())));
-        fields.makePawnMoveToDestinationField(1, Arrays.asList(new Pawn(UUID.randomUUID().toString())));
+        field4.putDesertTile(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class), new DesertTileFactory()));
+        new UnclassifiedDesertTilePage().addPawnsToField(field1, Arrays.asList(new Pawn(UUID.randomUUID().toString())));
+        new UnclassifiedDesertTilePage().addPawnsToField(field2, Arrays.asList(new Pawn(UUID.randomUUID().toString())));
 
         //When
         List<String> result = fields.getFieldsWhereNoPutDesertTile();

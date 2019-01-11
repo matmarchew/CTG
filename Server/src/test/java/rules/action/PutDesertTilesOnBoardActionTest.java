@@ -10,6 +10,7 @@ import rules.board.BettingCards;
 import rules.board.Field;
 import rules.board.Fields;
 import rules.board.tiles.desert.DesertTile;
+import rules.board.tiles.desert.DesertTileFactory;
 import rules.players.Player;
 import rules.players.PlayerSocket;
 
@@ -27,7 +28,7 @@ public class PutDesertTilesOnBoardActionTest {
         List<Field> fields = new LinkedList<>();
         fields.add(field);
         String playerLogin = UUID.randomUUID().toString();
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)), mock(PlayerObserver.class));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory()), mock(PlayerObserver.class));
         PutDesertTilesOnBoardAction putDesertTilesOnBoardAction = new PutDesertTilesOnBoardAction(new Fields(fields, mock(FieldsObserver.class)), player, Messages.OASIS_PAGE, "0");
 
         //When
@@ -44,7 +45,7 @@ public class PutDesertTilesOnBoardActionTest {
         List<Field> fields = new LinkedList<>();
         fields.add(field);
         String playerLogin = UUID.randomUUID().toString();
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)), mock(PlayerObserver.class));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory()), mock(PlayerObserver.class));
         PutDesertTilesOnBoardAction putDesertTilesOnBoardAction = new PutDesertTilesOnBoardAction(new Fields(fields, mock(FieldsObserver.class)), player, Messages.MIRAGE_PAGE, "0");
 
         //When

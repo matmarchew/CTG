@@ -1,6 +1,5 @@
 package rules.board;
 
-import rules.Cube;
 import rules.Messages;
 import rules.board.tiles.bet.BettingTiles;
 import rules.board.tiles.desert.DesertTile;
@@ -21,15 +20,6 @@ public class Board {
         this.bettingWinnerStack = new BettingFinalResult();
     }
 
-    public void movePawns(int numberOfFieldsToMove, Cube cube) {
-        int fieldPositionWithPawnInColor = fields.searchFieldOnThePawnIsStandingUsingCube(cube);
-        int nextFieldPosition = numberOfFieldsToMove + fieldPositionWithPawnInColor;
-
-        List<Pawn> pawns = fields.getPawnsToMoveFromField(fieldPositionWithPawnInColor, cube);
-        fields.notifyFieldObserver(fieldPositionWithPawnInColor);
-        fields.makePawnMoveToDestinationField(nextFieldPosition, pawns);
-    }
-
     public void addBettingCardToStack(BettingCard bettingCard, String finalBettingStack) {
         addBettingCardToSuitableStack(bettingCard, finalBettingStack);
     }
@@ -39,20 +29,32 @@ public class Board {
         players.calculatePointsAfterGameForStack(loserPawn, bettingLoserStack);
     }
 
-    public void prepareBoard() {
-        bettingTiles.prepareStacksOfBettingTile();
-    }
-
-    public boolean isGameFinished() {
-        return fields.isFinished();
+    public List<Pawn> getPawnsInOrder() {
+        return fields.getPawnsInOrder();
     }
 
     public DesertTile getReturnedDesertTile() {
         return fields.getReturnedDesertTile();
     }
 
-    public List<Pawn> getPawnsInOrder() {
-        return fields.getPawnsInOrder();
+    public boolean isGameFinished() {
+        return fields.isFinished();
+    }
+
+    public void moveThePawns(int numberOfFieldsToMove, String pawnColor) {
+        fields.moveThePawns(numberOfFieldsToMove, pawnColor);
+    }
+
+    public void prepareBoard() {
+        bettingTiles.prepareStacksOfBettingTile();
+    }
+
+    public Fields getFields() {
+        return fields;
+    }
+
+    public BettingTiles getStacksOfBetTile() {
+        return bettingTiles;
     }
 
     private void addBettingCardToSuitableStack(BettingCard bettingCard, String finalBettingStack) {
@@ -61,13 +63,5 @@ public class Board {
         } else {
             bettingLoserStack.addBettingCardToFinalStack(bettingCard);
         }
-    }
-
-    public BettingTiles getStacksOfBetTile() {
-        return bettingTiles;
-    }
-
-    public Fields getFields() {
-        return fields;
     }
 }

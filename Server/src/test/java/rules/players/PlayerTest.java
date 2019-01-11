@@ -11,6 +11,7 @@ import rules.board.BettingCards;
 import rules.board.Pawn;
 import rules.board.tiles.bet.BettingTile;
 import rules.board.tiles.desert.DesertTile;
+import rules.board.tiles.desert.DesertTileFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,7 +55,7 @@ public class PlayerTest {
     public void shouldReturnDesertTile() {
         //Given
         String playerLogin = UUID.randomUUID().toString();
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)), mock(PlayerObserver.class));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory()), mock(PlayerObserver.class));
 
         //When
         DesertTile desertTile = player.getPlayerDesertTile();
@@ -67,7 +68,7 @@ public class PlayerTest {
     public void shouldSetDesertTile() {
         //Given
         String playerLogin = UUID.randomUUID().toString();
-        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class)), mock(PlayerObserver.class));
+        Player player = new Player(mock(PlayerSocket.class), playerLogin, mock(BettingCards.class), new DesertTile(playerLogin, mock(DesertTileObserver.class), new DesertTileFactory()), mock(PlayerObserver.class));
         DesertTile desertTile = player.getPlayerDesertTile();
 
         //When
