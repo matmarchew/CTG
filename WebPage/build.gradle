@@ -16,11 +16,6 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-bootJar {
-    baseName = 'CTG'
-    version =  '0.1.0'
-}
-
 repositories {
     mavenCentral()
 }
@@ -37,4 +32,47 @@ dependencies {
     compile("org.webjars:sockjs-client:1.0.2")
     compile("org.webjars:stomp-websocket:2.3.3")
     testCompile("junit:junit")
+}
+
+task cleanOutput(type:Exec) {
+    group = 'docker'
+    dependsOn clean
+
+    def outputDir = 'out'
+    commandLine 'cmd', '/c', "if exist ${outputDir} rmdir ${outputDir} /s /q"
+}
+
+task cleanJarFile(type:Exec) {
+    group = 'docker'
+
+    commandLine 'cmd', '/c', 'del docker\\WebPage.jar'
+}
+
+bootJar {
+    manifest {
+        attributes 'Main-Class': 'org.springframework.boot.loader.JarLauncher'
+        attributes 'Start-Class': 'application.Application'
+    }
+}
+
+task copyJarFileTo (type:Exec) {
+    group = 'docker'
+    dependsOn cleanOutput, cleanJarFile, bootJar
+    bootJar.mustRunAfter(cleanOutput, cleanJarFile)
+
+    commandLine 'cmd', '/c', 'xcopy build\\libs\\WebPage.jar docker'
+}
+
+task buildDockerImage(type:Exec) {
+    group = 'docker'
+    dependsOn copyJarFileTo
+
+    commandLine 'cmd', '/c', "docker build -t web_page:latest docker"
+}
+
+task runContainer(type:Exec) {
+    group = 'docker'
+    dependsOn buildDockerImage
+
+    commandLine 'cmd', '/c', "docker run -td -p 8080:8080 web_page:latest"
 }
