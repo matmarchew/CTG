@@ -12,9 +12,44 @@ allprojects {
         testCompile group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
         compile group: 'org.json', name: 'json', version: '20090211'
     }
+}
 
-    task run(type: JavaExec) {
-        classpath = sourceSets.main.runtimeClasspath
-        main = 'Main'
+task cleanOutput(type:Exec) {
+    group = 'docker'
+    dependsOn clean
+
+    def outputDir = 'out'
+    commandLine 'cmd', '/c', "if exist ${outputDir} rmdir ${outputDir} /s /q"
+}
+
+task cleanJarFile(type:Exec) {
+    group = 'docker'
+    commandLine 'cmd', '/c', 'del docker\\Server.jar'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'Main'
     }
+}
+
+task copyJarFileTo (type:Exec) {
+    group = 'docker'
+    dependsOn cleanOutput, cleanJarFile, jar
+
+    commandLine 'cmd', '/c', 'xcopy build\\libs\\Server.jar docker'
+}
+
+task buildDockerImage(type:Exec) {
+    group = 'docker'
+    dependsOn copyJarFileTo
+
+    commandLine 'cmd', '/c', "docker build -t server:latest docker"
+}
+
+task runContainer(type:Exec) {
+    group = 'docker'
+    dependsOn buildDockerImage
+
+    commandLine 'cmd', '/c', "docker run -td -p 4444:4444 server:latest"
 }
