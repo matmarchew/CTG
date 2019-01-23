@@ -27,6 +27,7 @@ public class PlayerSocket {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             message = in.readLine();
+            System.out.println(message);
         } catch (IOException e) {
             e.printStackTrace();
         }

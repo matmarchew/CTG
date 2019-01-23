@@ -1,14 +1,23 @@
+import 'package:client_app/Client.dart';
 import 'package:client_app/navigation_bar/MyBottomNavigationBar.dart';
+import 'package:client_app/state/Model.dart';
 import 'package:client_app/views/PlaceholderWidget.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
+  final Client client;
   final String title;
+  final String login = "test";
+  final Model model;
+
+  MyHomePage({Key key, this.title, this.client, this.model}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() {
+    client.sendMessage({"LOGIN":login});
+    client.updateModel(model);
+    return _MyHomePageState();
+  }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
