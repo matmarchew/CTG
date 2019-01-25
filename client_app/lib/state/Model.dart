@@ -1,5 +1,5 @@
 class Model {
-  void updateState(Map<String, dynamic> data){
+  void updateState(Map<String, dynamic> data) {
     print(data);
   }
 }
