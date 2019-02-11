@@ -1,16 +1,14 @@
-import 'package:client_app/views/Refreshable.dart';
+import 'package:client_app/Client.dart';
+import 'package:client_app/action/Action.dart';
 import 'package:flutter/material.dart';
 
-class ThrowCubeWidget extends Refreshable {
-  final void Function(Map<String, dynamic> sendMessage) sendMessage;
-  ThrowCubeWidget(this.sendMessage);
+class ThrowCubeAction implements Action {
+  final Client client;
+
+  ThrowCubeAction(this.client);
 
   @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-
-  void createUiAfterClickButton(BuildContext context) {
+  void doSpecialBehavior(BuildContext context) {
     Future.delayed(
         Duration.zero,
         () => showDialog(
@@ -22,7 +20,7 @@ class ThrowCubeWidget extends Refreshable {
                     FlatButton(
                         child: Text("YES"),
                         onPressed: () {
-                          sendMessage({"ACTION_TYPE": "THROW_CUBE"});
+                          client.sendMessage({"ACTION_TYPE": "THROW_CUBE"});
                           Navigator.pop(context);
                         }),
                     FlatButton(
@@ -32,10 +30,5 @@ class ThrowCubeWidget extends Refreshable {
                         })
                   ]);
             }));
-  }
-
-  @override
-  void updateState(Map<String, dynamic> json) {
-    // TODO: implement updateState
   }
 }
