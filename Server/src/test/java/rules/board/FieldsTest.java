@@ -3,8 +3,7 @@ package rules.board;
 import communication.observer.CubeObserver;
 import communication.observer.DesertTileObserver;
 import communication.observer.FieldsObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import rules.Cube;
 import rules.board.tiles.desert.DesertTile;
 
@@ -13,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class FieldsTest {
@@ -34,7 +34,7 @@ public class FieldsTest {
         int result = fields.searchFieldOnThePawnIsStandingUsingCube(new Cube(color, mock(CubeObserver.class)));
 
         //Then
-        Assert.assertTrue(result == 0);
+        assertTrue(result == 0);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class FieldsTest {
         List<Pawn> result = fields.getPawnsInOrder();
 
         //Then
-        Assert.assertTrue(result.get(2).equals(color));
+        assertTrue(result.get(2).equals(color));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class FieldsTest {
         fields.makePawnMoveToDestinationField(2, pawns);
 
         //Then
-        Assert.assertTrue(fields.isFinished());
+        assertTrue(fields.isFinished());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class FieldsTest {
         fields.makePawnMoveToDestinationField(1, pawns);
 
         //Then
-        Assert.assertTrue(fields.isFinished());
+        assertTrue(fields.isFinished());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class FieldsTest {
         boolean result = fields.isFinished();
 
         //Then
-        Assert.assertTrue(!result);
+        assertTrue(!result);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class FieldsTest {
         int result = fields.numberOfFields();
 
         //Then
-        Assert.assertTrue(result == 1);
+        assertTrue(result == 1);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class FieldsTest {
         List<Pawn> result = fields.getPawnsToMoveFromField(-1, cube);
 
         //Then
-        Assert.assertTrue(result.size() == 1);
+        assertTrue(result.size() == 1);
     }
 
     @Test
@@ -147,7 +147,7 @@ public class FieldsTest {
         List<Pawn> result = fields.getPawnsToMoveFromField(0, cube);
 
         //Then
-        Assert.assertTrue(result.size() == 3);
+        assertTrue(result.size() == 3);
     }
 
     @Test
@@ -164,7 +164,7 @@ public class FieldsTest {
         DesertTile result = fields.getReturnedDesertTile();
 
         //Then
-        Assert.assertTrue(result.equals(playerLogin));
+        assertTrue(result.equals(playerLogin));
     }
 
     @Test
@@ -178,7 +178,7 @@ public class FieldsTest {
         fields.makePawnMoveToDestinationField(1, Arrays.asList(pawn));
 
         //Then
-        Assert.assertTrue(fields.isFinished());
+        assertTrue(fields.isFinished());
     }
 
     @Test
@@ -191,7 +191,7 @@ public class FieldsTest {
         fields.putDesertTileToField(new DesertTile(UUID.randomUUID().toString(), mock(DesertTileObserver.class)), 0);
 
         //Then
-        Assert.assertTrue(field.containsDesertTile());
+        assertTrue(field.containsDesertTile());
     }
 
     @Test
@@ -213,7 +213,7 @@ public class FieldsTest {
         List<String> result = fields.getFieldsWhereNoPutDesertTile();
 
         //Then
-        Assert.assertTrue(result.size() == 5);
+        assertTrue(result.size() == 5);
     }
 
     @Test
@@ -225,6 +225,6 @@ public class FieldsTest {
         List<String> result = fields.getFieldsWhereNoPutDesertTile();
 
         //Then
-        Assert.assertTrue(result.size() == 1);
+        assertTrue(result.size() == 1);
     }
 }

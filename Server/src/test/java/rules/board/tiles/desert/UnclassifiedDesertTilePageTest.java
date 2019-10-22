@@ -1,7 +1,8 @@
 package rules.board.tiles.desert;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UnclassifiedDesertTilePageTest {
     @Test
@@ -12,7 +13,7 @@ public class UnclassifiedDesertTilePageTest {
         int result = unclassifiedDesertTilePage.getBonusPoints();
 
         //Then
-        Assert.assertTrue(result == 0);
+        assertTrue(result == 0);
     }
 
 }

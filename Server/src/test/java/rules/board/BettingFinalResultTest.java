@@ -1,10 +1,11 @@
 package rules.board;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BettingFinalResultTest {
     @Test
@@ -23,7 +24,7 @@ public class BettingFinalResultTest {
         List<String> result = bettingFinalResult.getPlayersLoginFromBettingCardsInOrder(new Pawn(color), true);
 
         //Then
-        Assert.assertTrue(result.get(0).equals(playerLogin1) && result.get(1).equals(playerLogin2));
+        assertTrue(result.get(0).equals(playerLogin1) && result.get(1).equals(playerLogin2));
     }
 
     @Test
@@ -42,7 +43,7 @@ public class BettingFinalResultTest {
         List<String> result = bettingFinalResult.getPlayersLoginFromBettingCardsInOrder(new Pawn(color), false);
 
         //Then
-        Assert.assertTrue(result.size() == 1);
+        assertTrue(result.size() == 1);
     }
 
     @Test
@@ -56,6 +57,6 @@ public class BettingFinalResultTest {
         List<String> result = bettingFinalResult.getPlayersLoginFromBettingCardsInOrder(new Pawn(color), true);
 
         //Then
-        Assert.assertTrue(result.size() == 1);
+        assertTrue(result.size() == 1);
     }
 }

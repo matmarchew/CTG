@@ -1,14 +1,14 @@
 import communication.observer.*;
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import rules.Cube;
 import rules.Cubes;
 import rules.Game;
 import rules.Messages;
 import rules.board.*;
 import rules.board.tiles.bet.BettingTile;
-import rules.board.tiles.bet.StackOfBettingTile;
 import rules.board.tiles.bet.BettingTiles;
+import rules.board.tiles.bet.StackOfBettingTile;
 import rules.board.tiles.desert.DesertTile;
 import rules.players.Player;
 import rules.players.PlayerSocket;
@@ -17,6 +17,7 @@ import rules.players.Players;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class GameTest {
@@ -34,7 +35,7 @@ public class GameTest {
         List<Player> playersInOrder = game.gameResult();
 
         //Then
-        Assert.assertTrue(playersInOrder.get(0).equals("2") && playersInOrder.get(0).getPoints() == 15 &&
+        assertTrue(playersInOrder.get(0).equals("2") && playersInOrder.get(0).getPoints() == 15 &&
                 playersInOrder.get(1).equals("4") && playersInOrder.get(1).getPoints() == 8 &&
                 playersInOrder.get(2).equals("3") && playersInOrder.get(2).getPoints() == 7 &&
                 playersInOrder.get(3).equals("1") && playersInOrder.get(3).getPoints() == 6

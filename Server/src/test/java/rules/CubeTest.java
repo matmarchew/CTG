@@ -1,11 +1,11 @@
 package rules;
 
 import communication.observer.CubeObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class CubeTest {
@@ -19,7 +19,7 @@ public class CubeTest {
             int result = cube.roll();
 
             //Then
-            Assert.assertTrue(result > 0 && result <= 3);
+            assertTrue(result > 0 && result <= 3);
         }
 
     }
@@ -34,6 +34,6 @@ public class CubeTest {
         String result = cube.getColor();
 
         //Then
-        Assert.assertTrue(color.equals(result));
+        assertTrue(color.equals(result));
     }
 }

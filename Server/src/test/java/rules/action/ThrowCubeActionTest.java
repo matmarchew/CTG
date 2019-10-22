@@ -4,8 +4,7 @@ import communication.observer.CubeObserver;
 import communication.observer.CubesObserver;
 import communication.observer.FieldsObserver;
 import communication.observer.PlayerObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import rules.Cube;
 import rules.Cubes;
 import rules.board.*;
@@ -19,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class ThrowCubeActionTest {
@@ -50,7 +50,6 @@ public class ThrowCubeActionTest {
         throwCubeAction.performAction();
 
         //Then
-        Assert.assertTrue(fields.searchFieldOnThePawnIsStandingUsingCube(cube) >= 0);
+        assertTrue(fields.searchFieldOnThePawnIsStandingUsingCube(cube) >= 0);
     }
-
 }

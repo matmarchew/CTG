@@ -3,8 +3,7 @@ package rules.action;
 import communication.observer.DesertTileObserver;
 import communication.observer.FieldsObserver;
 import communication.observer.PlayerObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import rules.Messages;
 import rules.board.BettingCards;
 import rules.board.Field;
@@ -17,6 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class PutDesertTilesOnBoardActionTest {
@@ -34,7 +34,7 @@ public class PutDesertTilesOnBoardActionTest {
         putDesertTilesOnBoardAction.performAction();
 
         //Then
-        Assert.assertTrue(field.getDesertTileAndClearIt().equals(player));
+        assertTrue(field.getDesertTileAndClearIt().equals(player));
     }
 
     @Test
@@ -51,7 +51,7 @@ public class PutDesertTilesOnBoardActionTest {
         putDesertTilesOnBoardAction.performAction();
 
         //Then
-        Assert.assertTrue(field.getDesertTileAndClearIt().equals(player));
+        assertTrue(field.getDesertTileAndClearIt().equals(player));
     }
 
 }

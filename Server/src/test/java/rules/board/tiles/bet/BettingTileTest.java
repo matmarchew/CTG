@@ -1,12 +1,12 @@
 package rules.board.tiles.bet;
 
 import communication.observer.BettingTileObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class BettingTileTest {
@@ -21,7 +21,7 @@ public class BettingTileTest {
         String result = bettingTile.getColor();
 
         //Then
-        Assert.assertTrue(result.equals(color));
+        assertTrue(result.equals(color));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class BettingTileTest {
         int result = bettingTile.getValue();
 
         //Then
-        Assert.assertTrue(result == value);
+        assertTrue(result == value);
     }
 
 }

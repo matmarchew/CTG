@@ -1,7 +1,8 @@
 package rules.action;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EmptyActionTest {
     @Test
@@ -13,7 +14,7 @@ public class EmptyActionTest {
         emptyAction.performAction();
 
         //Then
-        Assert.assertTrue(true);
+        assertTrue(true);
     }
 
 }

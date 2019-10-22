@@ -1,8 +1,7 @@
 package rules.action;
 
 import communication.observer.PlayerObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import rules.Messages;
 import rules.board.*;
 import rules.board.tiles.bet.BettingTiles;
@@ -15,6 +14,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class PutBettingCardToFinalBettingStackActionTest {
@@ -34,7 +34,7 @@ public class PutBettingCardToFinalBettingStackActionTest {
         int result = player.getPoints();
 
         //Then
-        Assert.assertTrue(result == 8);
+        assertTrue(result == 8);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class PutBettingCardToFinalBettingStackActionTest {
         int result = player.getPoints();
 
         //Then
-        Assert.assertTrue(result == 8);
+        assertTrue(result == 8);
     }
 
 }

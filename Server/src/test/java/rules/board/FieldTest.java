@@ -2,8 +2,7 @@ package rules.board;
 
 import communication.observer.CubeObserver;
 import communication.observer.DesertTileObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import rules.Cube;
 import rules.Messages;
 import rules.board.tiles.desert.DesertTile;
@@ -12,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class FieldTest {
@@ -30,7 +30,7 @@ public class FieldTest {
         field.addPawns(Arrays.asList(pawn3, pawn4), -1);
 
         //Then
-        Assert.assertTrue(field.getPawns().get(2).equals(color));
+        assertTrue(field.getPawns().get(2).equals(color));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class FieldTest {
         field.addPawns(Arrays.asList(pawn1, pawn2), 1);
 
         //Then
-        Assert.assertTrue(field.getPawns().get(0).equals(color));
+        assertTrue(field.getPawns().get(0).equals(color));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class FieldTest {
         List<Pawn> nPawnsFromStack = field.getFirstNPawnsFromStack(1);
 
         //Then
-        Assert.assertTrue(nPawnsFromStack.size() == 1);
+        assertTrue(nPawnsFromStack.size() == 1);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class FieldTest {
         boolean result = field.isPawnInThisField(new Cube(color, mock(CubeObserver.class)));
 
         //Then
-        Assert.assertTrue(result);
+        assertTrue(result);
     }
 
     @Test
@@ -95,7 +95,7 @@ public class FieldTest {
         boolean result = field.isPawnInThisField(new Cube(UUID.randomUUID().toString(), mock(CubeObserver.class)));
 
         //Then
-        Assert.assertTrue(!result);
+        assertTrue(!result);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class FieldTest {
         int result = field.getPawnPositionInStack(new Cube(color, mock(CubeObserver.class)));
 
         //Then
-        Assert.assertTrue(result == 2);
+        assertTrue(result == 2);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class FieldTest {
         int result = field.getBonusFromDesertTile();
 
         //Then
-        Assert.assertTrue(result == 0);
+        assertTrue(result == 0);
     }
 
     @Test
@@ -141,7 +141,7 @@ public class FieldTest {
         int result = field.getBonusFromDesertTile();
 
         //Then
-        Assert.assertTrue(result == 1);
+        assertTrue(result == 1);
     }
 
     @Test
@@ -157,7 +157,7 @@ public class FieldTest {
         int result = field.getBonusFromDesertTile();
 
         //Then
-        Assert.assertTrue(result == -1);
+        assertTrue(result == -1);
     }
 
     @Test
@@ -175,7 +175,7 @@ public class FieldTest {
         int result = field.getNumberOfPawns();
 
         //Then
-        Assert.assertTrue(result == 4);
+        assertTrue(result == 4);
     }
 
     @Test
@@ -190,7 +190,7 @@ public class FieldTest {
         DesertTile result = field.getDesertTileAndClearIt();
 
         //Then
-        Assert.assertTrue(result.equals(playerLogin));
+        assertTrue(result.equals(playerLogin));
     }
 
     @Test
@@ -202,7 +202,7 @@ public class FieldTest {
         DesertTile result = field.getDesertTileAndClearIt();
 
         //Then
-        Assert.assertTrue(result == null);
+        assertTrue(result == null);
     }
 
     @Test
@@ -217,7 +217,7 @@ public class FieldTest {
         DesertTile result = field.getDesertTileAndClearIt();
 
         //Then
-        Assert.assertTrue(result.equals(playerLogin));
+        assertTrue(result.equals(playerLogin));
     }
 
     @Test
@@ -235,7 +235,7 @@ public class FieldTest {
         List<Pawn> pawns = field.getPawns();
 
         //Then
-        Assert.assertTrue(pawns.size() == 4);
+        assertTrue(pawns.size() == 4);
     }
 
     @Test
@@ -248,7 +248,7 @@ public class FieldTest {
         boolean result = field.containsDesertTile();
 
         //Then
-        Assert.assertTrue(result);
+        assertTrue(result);
     }
 
     @Test
@@ -260,6 +260,6 @@ public class FieldTest {
         boolean result = field.containsDesertTile();
 
         //Then
-        Assert.assertTrue(!result);
+        assertTrue(!result);
     }
 }

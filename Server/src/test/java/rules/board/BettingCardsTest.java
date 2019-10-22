@@ -1,11 +1,12 @@
 package rules.board;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BettingCardsTest {
     @Test
@@ -20,7 +21,7 @@ public class BettingCardsTest {
         BettingCard result = bettingCards.getBettingCardInColor(color);
 
         //Then
-        Assert.assertTrue(result.equals(color));
+        assertTrue(result.equals(color));
     }
 
     @Test
@@ -37,7 +38,7 @@ public class BettingCardsTest {
         List<BettingCard> result = bettingCards.getBettingCards();
 
         //Then
-        Assert.assertTrue(result.get(0).equals(color2));
+        assertTrue(result.get(0).equals(color2));
     }
 
 }

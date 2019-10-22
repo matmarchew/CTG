@@ -2,13 +2,13 @@ package rules.board.tiles.bet;
 
 import communication.CustomJSONObject;
 import communication.observer.BettingTileObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class BettingTilesTest {
@@ -25,7 +25,7 @@ public class BettingTilesTest {
         BettingTile result = bettingTiles.getTopBettingTileFromStackInColor(color);
 
         //Then
-        Assert.assertTrue(result.equals(bettingTile));
+        assertTrue(result.equals(bettingTile));
     }
 
     @Test
@@ -45,6 +45,6 @@ public class BettingTilesTest {
         List<CustomJSONObject> result = bettingTiles.getTopBettingTileFromEveryStack();
 
         //Then
-        Assert.assertTrue(result.size() == 2);
+        assertTrue(result.size() == 2);
     }
 }
