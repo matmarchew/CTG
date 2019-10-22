@@ -1,11 +1,11 @@
 package rules.board.tiles.bet;
 
 import communication.observer.BettingTileObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class StackOfBettingTileTest {
@@ -21,7 +21,7 @@ public class StackOfBettingTileTest {
         BettingTile result = stackOfBettingTile.getTopBettingTile();
 
         //Then
-        Assert.assertTrue(result.equals(bettingTile));
+        assertTrue(result.equals(bettingTile));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class StackOfBettingTileTest {
         BettingTile result = stackOfBettingTile.getTopBettingTileAndMarkedItAsUsed();
 
         //Then
-        Assert.assertTrue(result.equals(bettingTile));
+        assertTrue(result.equals(bettingTile));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class StackOfBettingTileTest {
         BettingTile result = stackOfBettingTile.getTopBettingTile();
 
         //Then
-        Assert.assertTrue(result.equals(bettingTile1));
+        assertTrue(result.equals(bettingTile1));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class StackOfBettingTileTest {
         BettingTile result = stackOfBettingTile.getTopBettingTile();
 
         //Then
-        Assert.assertTrue(result.getValue() == 0);
+        assertTrue(result.getValue() == 0);
     }
 
     @Test
@@ -88,7 +88,6 @@ public class StackOfBettingTileTest {
         BettingTile result = stackOfBettingTile.getTopBettingTileAndMarkedItAsUsed();
 
         //Then
-        Assert.assertTrue(result.getValue() == 0);
+        assertTrue(result.getValue() == 0);
     }
-
 }

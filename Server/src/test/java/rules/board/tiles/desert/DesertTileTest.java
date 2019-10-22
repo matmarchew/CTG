@@ -1,12 +1,12 @@
 package rules.board.tiles.desert;
 
 import communication.observer.DesertTileObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import rules.Messages;
 
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class DesertTileTest {
@@ -19,7 +19,7 @@ public class DesertTileTest {
         int result = desertTile.getBonusPoints();
 
         //Then
-        Assert.assertTrue(result == 0);
+        assertTrue(result == 0);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class DesertTileTest {
         int result = desertTile.getBonusPoints();
 
         //Then
-        Assert.assertTrue(result == -1);
+        assertTrue(result == -1);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class DesertTileTest {
         int result = desertTile.getBonusPoints();
 
         //Then
-        Assert.assertTrue(result == 1);
+        assertTrue(result == 1);
     }
 
     @Test
@@ -58,6 +58,6 @@ public class DesertTileTest {
         String result = desertTile.getPlayerLogin();
 
         //Then
-        Assert.assertTrue(result.equals(login));
+        assertTrue(result.equals(login));
     }
 }

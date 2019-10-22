@@ -2,8 +2,7 @@ package rules.action;
 
 import communication.observer.BettingTileObserver;
 import communication.observer.PlayerObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import rules.board.BettingCards;
 import rules.board.Pawn;
 import rules.board.tiles.bet.BettingTile;
@@ -17,6 +16,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class TakeBettingTileFromBoardActionTest {
@@ -35,6 +35,6 @@ public class TakeBettingTileFromBoardActionTest {
         player.calculatePointsAfterRound(new Pawn(color), new Pawn(UUID.randomUUID().toString()));
 
         //Then
-        Assert.assertTrue(player.getPoints() == 5);
+        assertTrue(player.getPoints() == 5);
     }
 }

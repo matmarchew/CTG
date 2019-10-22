@@ -1,7 +1,8 @@
 package rules.board.tiles.desert;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OasisDesertTilePageTest {
     @Test
@@ -13,6 +14,6 @@ public class OasisDesertTilePageTest {
         int result = oasisDesertTilePage.getBonusPoints();
 
         //Then
-        Assert.assertTrue(result == 1);
+        assertTrue(result == 1);
     }
 }

@@ -2,12 +2,13 @@ package rules;
 
 import communication.observer.CubeObserver;
 import communication.observer.CubesObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class CubesTest {
@@ -18,7 +19,7 @@ public class CubesTest {
         Cubes cubes = new Cubes(Arrays.asList(cube), mock(CubesObserver.class));
 
         //When - THEN
-        Assert.assertFalse(cubes.isCubesExist());
+        assertFalse(cubes.isCubesExist());
     }
 
     @Test
@@ -31,7 +32,7 @@ public class CubesTest {
         cubes.prepareCubes();
 
         //Then
-        Assert.assertTrue(cubes.isCubesExist());
+        assertTrue(cubes.isCubesExist());
     }
 
     @Test
@@ -45,7 +46,7 @@ public class CubesTest {
         Cube result = cubes.getNextCube();
 
         //Then
-        Assert.assertTrue(cube.equals(result) && !cubes.isCubesExist());
+        assertTrue(cube.equals(result) && !cubes.isCubesExist());
     }
 
 }

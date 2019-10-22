@@ -2,8 +2,7 @@ package rules.players;
 
 import communication.observer.BettingTileObserver;
 import communication.observer.PlayerObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import rules.board.BettingCard;
 import rules.board.BettingCards;
 import rules.board.BettingFinalResult;
@@ -15,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class PlayersTest {
@@ -28,7 +28,7 @@ public class PlayersTest {
         Player result = players.getNextPlayer();
 
         //Then
-        Assert.assertTrue(result.equals(player));
+        assertTrue(result.equals(player));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class PlayersTest {
         Player result = players.getNextPlayer();
 
         //Then
-        Assert.assertTrue(result.equals(player2));
+        assertTrue(result.equals(player2));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class PlayersTest {
         Player result = players.getNextPlayer();
 
         //Then
-        Assert.assertTrue(result.equals(player1));
+        assertTrue(result.equals(player1));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class PlayersTest {
         List<Player> result = players.sortPlayersInDescendingOrder();
 
         //Then
-        Assert.assertTrue(result.get(0).equals(player1) && result.get(1).equals(player2));
+        assertTrue(result.get(0).equals(player1) && result.get(1).equals(player2));
     }
 
     @Test
@@ -98,7 +98,7 @@ public class PlayersTest {
         players.calculatePointsAfterGameForStack(new Pawn(winningColor), winningBet);
 
         //Then
-        Assert.assertTrue(player1.getPoints() == 8 && player2.getPoints() == 4);
+        assertTrue(player1.getPoints() == 8 && player2.getPoints() == 4);
     }
 
 }

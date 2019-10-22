@@ -1,10 +1,11 @@
 package rules.board.tiles.desert;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import rules.Messages;
 
 import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DesertTileFactoryTest {
     @Test
@@ -13,7 +14,7 @@ public class DesertTileFactoryTest {
         ////Given-When
         DesertTilePage result = DesertTileFactory.getActivePage(Messages.OASIS_PAGE);
         //Then
-        Assert.assertTrue(result instanceof OasisDesertTilePage);
+        assertTrue(result instanceof OasisDesertTilePage);
     }
 
     @Test
@@ -23,7 +24,7 @@ public class DesertTileFactoryTest {
         DesertTilePage result = DesertTileFactory.getActivePage(UUID.randomUUID().toString());
 
         //Then
-        Assert.assertTrue(result instanceof UnclassifiedDesertTilePage);
+        assertTrue(result instanceof UnclassifiedDesertTilePage);
     }
 
     @Test
@@ -32,7 +33,7 @@ public class DesertTileFactoryTest {
         ////Given-When
         DesertTilePage result = DesertTileFactory.getActivePage(Messages.MIRAGE_PAGE);
         //Then
-        Assert.assertTrue(result instanceof MirageDesertTilePage);
+        assertTrue(result instanceof MirageDesertTilePage);
     }
 
 }

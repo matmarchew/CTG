@@ -4,8 +4,7 @@ import communication.CustomJSONObject;
 import communication.observer.BettingTileObserver;
 import communication.observer.DesertTileObserver;
 import communication.observer.PlayerObserver;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import rules.board.BettingCard;
 import rules.board.BettingCards;
 import rules.board.Pawn;
@@ -16,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class PlayerTest {
@@ -33,7 +33,7 @@ public class PlayerTest {
         player.calculatePointsAfterRound(new Pawn(winningColor), new Pawn(runnerUpColor));
 
         //Then
-        Assert.assertTrue(player.getPoints() == 5);
+        assertTrue(player.getPoints() == 5);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class PlayerTest {
         BettingCard result = player.getBettingCardInColor(color);
 
         //Then
-        Assert.assertTrue(result.equals(bettingCard));
+        assertTrue(result.equals(bettingCard));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class PlayerTest {
         DesertTile desertTile = player.getPlayerDesertTile();
 
         //Then
-        Assert.assertTrue(desertTile.equals(playerLogin));
+        assertTrue(desertTile.equals(playerLogin));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class PlayerTest {
         desertTile = player.getPlayerDesertTile();
 
         //Then
-        Assert.assertTrue(desertTile.equals(playerLogin));
+        assertTrue(desertTile.equals(playerLogin));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class PlayerTest {
         int result = player.getPoints();
 
         //Then
-        Assert.assertTrue(result == 2);
+        assertTrue(result == 2);
     }
 
     @Test
@@ -100,7 +100,7 @@ public class PlayerTest {
         boolean result = player.isHaveDesertTile();
 
         //Then
-        Assert.assertTrue(result);
+        assertTrue(result);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class PlayerTest {
         boolean result = player.isHaveDesertTile();
 
         //Then
-        Assert.assertTrue(!result);
+        assertTrue(!result);
     }
 
     @Test
@@ -132,6 +132,6 @@ public class PlayerTest {
         List<CustomJSONObject> result = player.getUsedBetCards();
 
         //Then
-        Assert.assertTrue(result.size() == 1);
+        assertTrue(result.size() == 1);
     }
 }

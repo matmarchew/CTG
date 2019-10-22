@@ -1,8 +1,7 @@
 package rules.action;
 
 import communication.CustomJSONObject;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import rules.Cubes;
 import rules.Messages;
 import rules.board.Board;
@@ -10,6 +9,7 @@ import rules.players.Player;
 
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class PlayerActionFactoryTest {
@@ -23,7 +23,7 @@ public class PlayerActionFactoryTest {
         PlayerAction result = PlayerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
 
         //Then
-        Assert.assertTrue(result instanceof ThrowCubeAction);
+        assertTrue(result instanceof ThrowCubeAction);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class PlayerActionFactoryTest {
         PlayerAction result = PlayerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
 
         //Then
-        Assert.assertTrue(result instanceof PutBettingCardToFinalBettingStackAction);
+        assertTrue(result instanceof PutBettingCardToFinalBettingStackAction);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class PlayerActionFactoryTest {
         PlayerAction result = PlayerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
 
         //Then
-        Assert.assertTrue(result instanceof PutDesertTilesOnBoardAction);
+        assertTrue(result instanceof PutDesertTilesOnBoardAction);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class PlayerActionFactoryTest {
         PlayerAction result = PlayerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
 
         //Then
-        Assert.assertTrue(result instanceof TakeBettingTileFromBoardAction);
+        assertTrue(result instanceof TakeBettingTileFromBoardAction);
     }
 
     @Test
@@ -80,7 +80,6 @@ public class PlayerActionFactoryTest {
         PlayerAction result = PlayerActionFactory.getPlayerActionFromJson(jsonObject, mock(Player.class), mock(Board.class), mock(Cubes.class));
 
         //Then
-        Assert.assertTrue(result instanceof EmptyAction);
+        assertTrue(result instanceof EmptyAction);
     }
-
 }

@@ -1,8 +1,7 @@
 package rules.board;
 
 import communication.observer.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import rules.Cube;
 import rules.Messages;
 import rules.board.tiles.bet.BettingTile;
@@ -15,6 +14,7 @@ import rules.players.Players;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class BoardTest {
@@ -30,7 +30,7 @@ public class BoardTest {
         board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
 
         //Then
-        Assert.assertTrue(field.getNumberOfPawns() == 1);
+        assertTrue(field.getNumberOfPawns() == 1);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class BoardTest {
         boolean result = board.isGameFinished();
 
         //Then
-        Assert.assertTrue(result);
+        assertTrue(result);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class BoardTest {
         board.movePawns(1, new Cube(color, mock(CubeObserver.class)));
 
         //Then
-        Assert.assertTrue(field2.getNumberOfPawns() == 1);
+        assertTrue(field2.getNumberOfPawns() == 1);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class BoardTest {
         board.calculatePointsAfterGame(new Pawn(color), new Pawn(UUID.randomUUID().toString()), new Players(Arrays.asList(player)));
 
         //Then
-        Assert.assertTrue(player.getPoints() == 8);
+        assertTrue(player.getPoints() == 8);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class BoardTest {
         board.calculatePointsAfterGame(new Pawn(UUID.randomUUID().toString()), new Pawn(color), new Players(Arrays.asList(player)));
 
         //Then
-        Assert.assertTrue(player.getPoints() == 8);
+        assertTrue(player.getPoints() == 8);
     }
 
     @Test
@@ -118,7 +118,7 @@ public class BoardTest {
         BettingTile result = bettingTiles.getTopBettingTileFromStackInColor(color);
 
         //Then
-        Assert.assertTrue(result.getValue() == value);
+        assertTrue(result.getValue() == value);
     }
 
     @Test
@@ -135,7 +135,7 @@ public class BoardTest {
         DesertTile result = board.getReturnedDesertTile();
 
         //Then
-        Assert.assertTrue(result.equals(playerLogin));
+        assertTrue(result.equals(playerLogin));
     }
 
     @Test
@@ -153,6 +153,6 @@ public class BoardTest {
         List<Pawn> result = board.getPawnsInOrder();
 
         //Then
-        Assert.assertTrue(result.get(2).equals(color));
+        assertTrue(result.get(2).equals(color));
     }
 }
