@@ -3,5 +3,6 @@
 .gradle/
 out/
 build/
-Server.jar
-WebPage.jar
+*.jar
+gradle/
+gradle*
